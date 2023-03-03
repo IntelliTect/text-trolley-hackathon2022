@@ -10,13 +10,12 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
-  WORKING_DIRECTORY: src/IntelliTect.TextTrolley.Web
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ${{ WORKING_DIRECTORY }}
+        working-directory: src/IntelliTect.TextTrolley.Web
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET SDK
