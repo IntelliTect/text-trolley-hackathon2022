@@ -7,13 +7,16 @@ on:
     branches: [ "main" ]
 env:
   AZURE_WEBAPP_NAME: text-trolley-web
-  AZURE_WEBAPP_PACKAGE_PATH: src/IntelliTect.TextTrolley.Web/published
+  AZURE_WEBAPP_PACKAGE_PATH: published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
   WORKING_DIRECTORY: src/IntelliTect.TextTrolley.Web
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+      working-directory: ${{ WORKING_DIRECTORY }}
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET SDK
@@ -21,13 +24,17 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
     - name: Restore
-      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+      run: dotnet restore
     - name: Build
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+      run: dotnet build --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Restore npm packages
+      run: npm ci
+    - name: Build Vue App
+      run: npm run build
     - name: Test
-      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
+      run: dotnet test --no-build
     - name: Publish
-      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+      run: dotnet publish --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
     - name: Publish Artifacts
       uses: actions/upload-artifact@v3
       with:
