@@ -1,0 +1,16 @@
+{
+  "webProject": {
+    "projectFile": "./IntelliTect.TextTrolley.Web/IntelliTect.TextTrolley.Web.csproj"
+  },
+  "dataProject": {
+    "projectFile": "./IntelliTect.TextTrolley.Data/IntelliTect.TextTrolley.Data.csproj"
+  },
+
+  "rootGenerator": "Vue",
+
+  "generatorConfig": {
+    "Scripts": {
+      "targetDirectory": "../src"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "typescript.tsdk": "IntelliTect.TextTrolley.Web\\node_modules\\typescript\\lib",
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript", "typescript", "vue"],
+  "cSpell.enableFiletypes": ["vue"],
+  "cSpell.words": ["Vite", "unplugin", "iconsets", "viewmodels"]
+}
