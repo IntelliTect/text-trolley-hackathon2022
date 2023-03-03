@@ -4,27 +4,18 @@ module.exports = {
     node: true,
   },
   extends: [
-    "plugin:vue/essential",
+    "plugin:vue/vue3-essential",
     "eslint:recommended",
-    "@vue/eslint-config-typescript/recommended",
-    "@vue/eslint-config-prettier",
+    "@vue/eslint-config-typescript",
   ],
   parserOptions: {
     ecmaVersion: "latest",
   },
   rules: {
-    "prettier/prettier": [
-      "error",
-      {
-        endOfLine: "auto",
-      },
-    ],
-    "vue/valid-v-slot": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "vue/multi-word-component-names": "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-console": "off",
+    "no-undef": "off", // Redundant with Typescript
   },
-  ignorePatterns: ["/**/*.g.ts"],
+  ignorePatterns: ["wwwroot", "node_modules", "/**/*.g.ts"],
 };

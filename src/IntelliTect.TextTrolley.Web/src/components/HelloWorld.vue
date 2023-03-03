@@ -98,7 +98,19 @@
                 </v-col>
                 <v-col>
                   Visual Studio is recommended for back-end C# work, but other
-                  IDEs like Rider or VS Code can also be used.
+                  IDEs like Rider or VS Code can also be used. Recommended
+                  extensions:
+                  <ul class="mt-1">
+                    <li>
+                      <a
+                        href="https://marketplace.visualstudio.com/items?itemName=MadsKristensen.NpmTaskRunner64"
+                      >
+                        NPM Task Runner
+                      </a>
+                      (for easily running
+                      <code>dotnet coalesce</code>)
+                    </li>
+                  </ul>
                 </v-col>
               </v-row>
               <v-row align="center">
@@ -136,6 +148,13 @@
                         href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
                       >
                         ESLint
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode"
+                      >
+                        Prettier
                       </a>
                     </li>
                   </ul>
@@ -233,13 +252,7 @@
 </template>
 
 <script setup lang="ts">
-import $metadata from "@/metadata.g";
-
-const props = defineProps<{ msg: string | null }>();
-
-const adminTypes = Object.values($metadata.types).filter(
-  (t) => t.type == "model"
-);
+defineProps<{ msg: string | null }>();
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
