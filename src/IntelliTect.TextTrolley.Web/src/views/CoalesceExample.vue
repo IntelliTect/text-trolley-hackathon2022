@@ -14,7 +14,6 @@
     to display and edit properties of a model. Autosave is enabled.
 
     <c-loader-status
-      #default
       :loaders="{
         'no-error-content no-initial-content': [user.$load],
         '': [user.$save],
