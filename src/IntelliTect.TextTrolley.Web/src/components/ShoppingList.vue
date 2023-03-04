@@ -16,7 +16,7 @@
 
     <v-card flat width="100%">
 
-    <v-btn @click="openDialog()" color="primary" icon="fa-solid fa-plus" class="add-btn" />
+      <v-btn @click="openDialog()" color="primary" icon="fa-solid fa-plus" class="add-btn" />
     </v-card>
 
 
@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { ShoppingListItemViewModel, ShoppingListViewModel } from "../viewmodels.g";
+  import { ShoppingListItemViewModel, ShoppingListViewModel } from "../viewmodels.g";
 
   const props = defineProps<{ shoppingList: ShoppingListViewModel }>();
 
@@ -92,7 +92,7 @@ import { ShoppingListItemViewModel, ShoppingListViewModel } from "../viewmodels.
       newItem.shoppingListId = props.shoppingList.shoppingListId;
       props.shoppingList.items?.push(newItem);
       newItem.$save();
-      addItem.value= false;
+      addItem.value = false;
     }
   }
 </script>

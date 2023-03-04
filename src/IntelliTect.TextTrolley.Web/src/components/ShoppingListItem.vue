@@ -1,27 +1,25 @@
 <template>
-  <v-hover v-slot="{ isHovering, props }">
-    <v-timeline-item vertical-timeline-element-icon
-                     v-bind="props"
-                     dot-color="primary"
-                     size="large"
-                     :icon="getIcon(isHovering)"
-                     @click="toggleItem()"
-                     :width="width()">
-      <v-card @click.stop="" :ripple="false" flat :color="listItem.purchased ? 'indigo-lighten-5' : 'grey-lighten-3'">
-          <v-list-item class="ma-3">
-            <v-list-item-title v-if="!isEditing">
-              {{ listItem.name }}
-            </v-list-item-title>
-            <v-text-field v-else width="100%" hide-details label="Description" v-model="listItem.name" />
+  <v-timeline-item vertical-timeline-element-icon
+                   dot-color="primary"
+                   size="large"
+                   :icon="getIcon()"
+                   @click="toggleItem()"
+                   width="70vw">
+    <v-card @click.stop="edit" :ripple="false" flat :color="listItem.purchased ? 'indigo-lighten-5' : 'grey-lighten-3'">
 
-            <template v-slot:append>
-              <v-btn :icon="isEditing ? 'fa-solid fa-floppy-disk' : 'fa-solid fa-pen'" color="secondary" class="mr-3 ml-5" @click.stop="edit()" size="small" />
-              <v-btn icon="fa-solid fa-trash" color="error" @click.stop="deleteItem()" size="small" />
-            </template>
-          </v-list-item>
-      </v-card>
-    </v-timeline-item>
-  </v-hover>
+      <v-row class="ma-1" dense align="center">
+        <v-col>
+          <span v-if="!isEditing" :class="props.listItem.purchased ? 'text-decoration-line-through' : ''">
+            {{ listItem.name }}
+          </span>
+          <v-text-field autofocus v-else width="100%" hide-details label="Description" v-model="listItem.name" />
+        </v-col>
+        <v-col cols="auto" class="text-right">
+          <v-btn icon="fa-solid fa-trash" color="error" @click.stop="deleteItem()" size="x-small" />
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-timeline-item>
 </template>
 
 <script lang="ts">
@@ -33,6 +31,7 @@
   import { getCurrentInstance } from 'vue';
 
   const props = defineProps<{ listItem: ShoppingListItemViewModel }>();
+  const vue = getCurrentInstance();
 
   let isEditing = ref(false);
 
@@ -40,19 +39,11 @@
     isEditing.value = false;
   }
 
-  function width() {
-    const vue = getCurrentInstance();
-    if (vue?.proxy?.$vuetify.display.xs) {
-      return "100%";
-    }
-    return "70vw";
-  }
-
-  function getIcon(hover: boolean) {
+  function getIcon() {
     if (props.listItem.purchased) {
       return "fa-solid fa-check";
     } else {
-      return hover ? "fa-solid fa-check" : "";
+      return "";
     }
   }
 
@@ -61,10 +52,6 @@
     if (!isEditing) {
       props.listItem.$save();
     }
-  }
-
-  function getClass() {
-    return props.listItem.purchased ? "text-decoration-line-through" : "";
   }
 
   function deleteItem() {
