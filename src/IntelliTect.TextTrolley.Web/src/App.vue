@@ -37,6 +37,13 @@
           <v-list-item-title>Shopping Lists</v-list-item-title>
         </v-list-item>
 
+        <v-list-item link to="/register">
+          <template #prepend>
+            <v-icon>fa-solid fa-user</v-icon>
+          </template>
+          <v-list-item-title>Register</v-list-item-title>
+        </v-list-item>
+
         <v-list-item link to="/coalesce-example">
           <template #prepend>
             <v-icon>fas fa-palette</v-icon>

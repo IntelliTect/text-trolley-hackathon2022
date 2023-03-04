@@ -15,6 +15,11 @@ export default createRouter({
       component: () => import("./views/AllShoppingLists.vue"),
     },
     {
+      path: "/register",
+      name: "register",
+      component: () => import("./views/Register.vue"),
+    },
+    {
       path: "/coalesce-example",
       name: "coalesce-example",
       component: () => import("./views/CoalesceExample.vue"),

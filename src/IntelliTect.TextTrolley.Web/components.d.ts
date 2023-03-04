@@ -7,7 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    CLoaderStatus: typeof import('coalesce-vue-vuetify3')['CLoaderStatus']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -22,26 +21,18 @@ declare module '@vue/runtime-core' {
     VCardActions: typeof import('vuetify/components')['VCardActions']
     VCardText: typeof import('vuetify/components')['VCardText']
     VCardTitle: typeof import('vuetify/components')['VCardTitle']
-    VCheckbox: typeof import('vuetify/components')['VCheckbox']
     VCol: typeof import('vuetify/components')['VCol']
     VContainer: typeof import('vuetify/components')['VContainer']
-    VDialog: typeof import('vuetify/components')['VDialog']
     VDivider: typeof import('vuetify/components')['VDivider']
-    VHover: typeof import('vuetify/components')['VHover']
     VIcon: typeof import('vuetify/components')['VIcon']
     VList: typeof import('vuetify/components')['VList']
     VListItem: typeof import('vuetify/components')['VListItem']
-    VListItemActions: typeof import('vuetify/components')['VListItemActions']
     VListItemTitle: typeof import('vuetify/components')['VListItemTitle']
     VMain: typeof import('vuetify/components')['VMain']
-    VMenu: typeof import('vuetify/components')['VMenu']
     VNavigationDrawer: typeof import('vuetify/components')['VNavigationDrawer']
     VRow: typeof import('vuetify/components')['VRow']
     VSpacer: typeof import('vuetify/components')['VSpacer']
     VTextField: typeof import('vuetify/components')['VTextField']
-    VTextInput: typeof import('vuetify/components')['VTextInput']
-    VTimeline: typeof import('vuetify/components')['VTimeline']
-    VTimelineItem: typeof import('vuetify/components')['VTimelineItem']
     VToolbarTitle: typeof import('vuetify/components')['VToolbarTitle']
   }
 }
