@@ -37,12 +37,123 @@ export const ApplicationUser = domain.types.ApplicationUser = {
   dataSources: {
   },
 }
+export const Requester = domain.types.Requester = {
+  name: "Requester",
+  displayName: "Requester",
+  get displayProp() { return this.props.requesterId }, 
+  type: "model",
+  controllerRoute: "Requester",
+  get keyProp() { return this.props.requesterId }, 
+  behaviorFlags: 7,
+  props: {
+    requesterId: {
+      name: "requesterId",
+      displayName: "Requester Id",
+      type: "number",
+      role: "primaryKey",
+      hidden: 3,
+    },
+    requesterName: {
+      name: "requesterName",
+      displayName: "Requester Name",
+      type: "string",
+      role: "value",
+    },
+    requesterNumber: {
+      name: "requesterNumber",
+      displayName: "Requester Number",
+      type: "string",
+      role: "value",
+    },
+  },
+  methods: {
+  },
+  dataSources: {
+  },
+}
+export const ShoppingList = domain.types.ShoppingList = {
+  name: "ShoppingList",
+  displayName: "Shopping List",
+  get displayProp() { return this.props.shoppingListId }, 
+  type: "model",
+  controllerRoute: "ShoppingList",
+  get keyProp() { return this.props.shoppingListId }, 
+  behaviorFlags: 7,
+  props: {
+    shoppingListId: {
+      name: "shoppingListId",
+      displayName: "Shopping List Id",
+      type: "number",
+      role: "primaryKey",
+      hidden: 3,
+    },
+    requesterId: {
+      name: "requesterId",
+      displayName: "Requester Id",
+      type: "string",
+      role: "value",
+    },
+    applicationUserIds: {
+      name: "applicationUserIds",
+      displayName: "Application User Ids",
+      type: "collection",
+      itemType: {
+        name: "$collectionItem",
+        displayName: "",
+        role: "value",
+        type: "number",
+      },
+      role: "value",
+    },
+  },
+  methods: {
+  },
+  dataSources: {
+  },
+}
+export const ShoppingListItem = domain.types.ShoppingListItem = {
+  name: "ShoppingListItem",
+  displayName: "Shopping List Item",
+  get displayProp() { return this.props.name }, 
+  type: "model",
+  controllerRoute: "ShoppingListItem",
+  get keyProp() { return this.props.shoppingListItemId }, 
+  behaviorFlags: 7,
+  props: {
+    shoppingListItemId: {
+      name: "shoppingListItemId",
+      displayName: "Shopping List Item Id",
+      type: "number",
+      role: "primaryKey",
+      hidden: 3,
+    },
+    name: {
+      name: "name",
+      displayName: "Name",
+      type: "string",
+      role: "value",
+    },
+    shoppingListId: {
+      name: "shoppingListId",
+      displayName: "Shopping List Id",
+      type: "number",
+      role: "value",
+    },
+  },
+  methods: {
+  },
+  dataSources: {
+  },
+}
 
 interface AppDomain extends Domain {
   enums: {
   }
   types: {
     ApplicationUser: typeof ApplicationUser
+    Requester: typeof Requester
+    ShoppingList: typeof ShoppingList
+    ShoppingListItem: typeof ShoppingListItem
   }
   services: {
   }

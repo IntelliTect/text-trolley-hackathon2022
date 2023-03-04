@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntelliTect.TextTrolley.Data.Models
 {
-  internal class ShoppingListItem
+  public class ShoppingListItem
   {
     public int ShoppingListItemId { get; set; }
     public string Name { get; set; }

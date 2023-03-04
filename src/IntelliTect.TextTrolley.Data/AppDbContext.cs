@@ -7,6 +7,10 @@ namespace IntelliTect.TextTrolley.Data;
 public class AppDbContext : DbContext
 {
     public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
+    public DbSet<ShoppingList> ShoppingList => Set<ShoppingList>();
+    public DbSet<ShoppingListItem> ShoppingListItem => Set<ShoppingListItem>();
+    public DbSet<Requester> Requester => Set<Requester>();
+
 
     public AppDbContext()
     {

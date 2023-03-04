@@ -20,54 +20,54 @@ using System.Threading.Tasks;
 
 namespace IntelliTect.TextTrolley.Web.Api
 {
-    [Route("api/ApplicationUser")]
+    [Route("api/ShoppingListItem")]
     [Authorize]
     [ServiceFilter(typeof(IApiActionFilter))]
-    public partial class ApplicationUserController
-        : BaseApiController<IntelliTect.TextTrolley.Data.Models.ApplicationUser, ApplicationUserDtoGen, IntelliTect.TextTrolley.Data.AppDbContext>
+    public partial class ShoppingListItemController
+        : BaseApiController<IntelliTect.TextTrolley.Data.Models.ShoppingListItem, ShoppingListItemDtoGen, IntelliTect.TextTrolley.Data.AppDbContext>
     {
-        public ApplicationUserController(IntelliTect.TextTrolley.Data.AppDbContext db) : base(db)
+        public ShoppingListItemController(IntelliTect.TextTrolley.Data.AppDbContext db) : base(db)
         {
-            GeneratedForClassViewModel = ReflectionRepository.Global.GetClassViewModel<IntelliTect.TextTrolley.Data.Models.ApplicationUser>();
+            GeneratedForClassViewModel = ReflectionRepository.Global.GetClassViewModel<IntelliTect.TextTrolley.Data.Models.ShoppingListItem>();
         }
 
         [HttpGet("get/{id}")]
         [Authorize]
-        public virtual Task<ItemResult<ApplicationUserDtoGen>> Get(
+        public virtual Task<ItemResult<ShoppingListItemDtoGen>> Get(
             int id,
             DataSourceParameters parameters,
-            IDataSource<IntelliTect.TextTrolley.Data.Models.ApplicationUser> dataSource)
+            IDataSource<IntelliTect.TextTrolley.Data.Models.ShoppingListItem> dataSource)
             => GetImplementation(id, parameters, dataSource);
 
         [HttpGet("list")]
         [Authorize]
-        public virtual Task<ListResult<ApplicationUserDtoGen>> List(
+        public virtual Task<ListResult<ShoppingListItemDtoGen>> List(
             ListParameters parameters,
-            IDataSource<IntelliTect.TextTrolley.Data.Models.ApplicationUser> dataSource)
+            IDataSource<IntelliTect.TextTrolley.Data.Models.ShoppingListItem> dataSource)
             => ListImplementation(parameters, dataSource);
 
         [HttpGet("count")]
         [Authorize]
         public virtual Task<ItemResult<int>> Count(
             FilterParameters parameters,
-            IDataSource<IntelliTect.TextTrolley.Data.Models.ApplicationUser> dataSource)
+            IDataSource<IntelliTect.TextTrolley.Data.Models.ShoppingListItem> dataSource)
             => CountImplementation(parameters, dataSource);
 
         [HttpPost("save")]
         [Authorize]
-        public virtual Task<ItemResult<ApplicationUserDtoGen>> Save(
-            [FromForm] ApplicationUserDtoGen dto,
+        public virtual Task<ItemResult<ShoppingListItemDtoGen>> Save(
+            [FromForm] ShoppingListItemDtoGen dto,
             [FromQuery] DataSourceParameters parameters,
-            IDataSource<IntelliTect.TextTrolley.Data.Models.ApplicationUser> dataSource,
-            IBehaviors<IntelliTect.TextTrolley.Data.Models.ApplicationUser> behaviors)
+            IDataSource<IntelliTect.TextTrolley.Data.Models.ShoppingListItem> dataSource,
+            IBehaviors<IntelliTect.TextTrolley.Data.Models.ShoppingListItem> behaviors)
             => SaveImplementation(dto, parameters, dataSource, behaviors);
 
         [HttpPost("delete/{id}")]
         [Authorize]
-        public virtual Task<ItemResult<ApplicationUserDtoGen>> Delete(
+        public virtual Task<ItemResult<ShoppingListItemDtoGen>> Delete(
             int id,
-            IBehaviors<IntelliTect.TextTrolley.Data.Models.ApplicationUser> behaviors,
-            IDataSource<IntelliTect.TextTrolley.Data.Models.ApplicationUser> dataSource)
+            IBehaviors<IntelliTect.TextTrolley.Data.Models.ShoppingListItem> behaviors,
+            IDataSource<IntelliTect.TextTrolley.Data.Models.ShoppingListItem> dataSource)
             => DeleteImplementation(id, new DataSourceParameters(), dataSource, behaviors);
     }
 }

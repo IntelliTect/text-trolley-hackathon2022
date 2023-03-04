@@ -8,3 +8,18 @@ export class ApplicationUserApiClient extends ModelApiClient<$models.Application
 }
 
 
+export class RequesterApiClient extends ModelApiClient<$models.Requester> {
+  constructor() { super($metadata.Requester) }
+}
+
+
+export class ShoppingListApiClient extends ModelApiClient<$models.ShoppingList> {
+  constructor() { super($metadata.ShoppingList) }
+}
+
+
+export class ShoppingListItemApiClient extends ModelApiClient<$models.ShoppingListItem> {
+  constructor() { super($metadata.ShoppingListItem) }
+}
+
+
