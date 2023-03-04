@@ -20,6 +20,14 @@ export default createRouter({
       component: () => import("./views/Register.vue"),
     },
     {
+      path: "/shopping-lists/:listId",
+      name: "shopping-list",
+      component: () => import("./views/ShoppingList.vue"),
+      props: (r) => ({
+        listId: r.params.listId,
+      }),
+    },
+    {
       path: "/admin",
       name: "admin",
       component: () => import("./views/Admin.vue"),
