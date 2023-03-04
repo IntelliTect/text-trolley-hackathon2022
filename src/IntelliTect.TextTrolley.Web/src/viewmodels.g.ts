@@ -27,6 +27,8 @@ export interface RequesterViewModel extends $models.Requester {
   requesterId: number | null;
   requesterName: string | null;
   requesterNumber: string | null;
+  activeShoppingListKey: number | null;
+  activeShoppingList: ShoppingListViewModel | null;
 }
 export class RequesterViewModel extends ViewModel<$models.Requester, $apiClients.RequesterApiClient, number> implements $models.Requester  {
   
@@ -46,8 +48,11 @@ export class RequesterListViewModel extends ListViewModel<$models.Requester, $ap
 
 export interface ShoppingListViewModel extends $models.ShoppingList {
   shoppingListId: number | null;
-  requesterId: string | null;
-  applicationUserIds: number[] | null;
+  requester: RequesterViewModel | null;
+  applicationUsers: ApplicationUserViewModel[] | null;
+  items: ShoppingListItemViewModel[] | null;
+  isComplete: boolean | null;
+  isDelivered: boolean | null;
 }
 export class ShoppingListViewModel extends ViewModel<$models.ShoppingList, $apiClients.ShoppingListApiClient, number> implements $models.ShoppingList  {
   
@@ -68,7 +73,8 @@ export class ShoppingListListViewModel extends ListViewModel<$models.ShoppingLis
 export interface ShoppingListItemViewModel extends $models.ShoppingListItem {
   shoppingListItemId: number | null;
   name: string | null;
-  shoppingListId: number | null;
+  originalName: string | null;
+  shoppingList: ShoppingListViewModel | null;
   purchased: boolean | null;
 }
 export class ShoppingListItemViewModel extends ViewModel<$models.ShoppingListItem, $apiClients.ShoppingListItemApiClient, number> implements $models.ShoppingListItem  {

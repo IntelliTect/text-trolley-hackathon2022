@@ -56,8 +56,16 @@ namespace IntelliTect.TextTrolley.Web.Models
         /// </summary>
         public override IntelliTect.TextTrolley.Data.Models.ApplicationUser MapToNew(IMappingContext context)
         {
-            var entity = new IntelliTect.TextTrolley.Data.Models.ApplicationUser();
-            MapTo(entity, context);
+            var includes = context.Includes;
+
+            var entity = new IntelliTect.TextTrolley.Data.Models.ApplicationUser()
+            {
+                Name = Name,
+            };
+
+            if (OnUpdate(entity, context)) return entity;
+            if (ShouldMapTo(nameof(ApplicationUserId))) entity.ApplicationUserId = (ApplicationUserId ?? entity.ApplicationUserId);
+
             return entity;
         }
     }

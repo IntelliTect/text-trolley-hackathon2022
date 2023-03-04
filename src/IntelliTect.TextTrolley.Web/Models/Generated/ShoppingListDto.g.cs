@@ -13,23 +13,41 @@ namespace IntelliTect.TextTrolley.Web.Models
         public ShoppingListDtoGen() { }
 
         private int? _ShoppingListId;
-        private string _RequesterId;
-        private System.Collections.Generic.ICollection<int> _ApplicationUserIds;
+        private IntelliTect.TextTrolley.Web.Models.RequesterDtoGen _Requester;
+        private System.Collections.Generic.ICollection<IntelliTect.TextTrolley.Web.Models.ApplicationUserDtoGen> _ApplicationUsers;
+        private System.Collections.Generic.ICollection<IntelliTect.TextTrolley.Web.Models.ShoppingListItemDtoGen> _Items;
+        private bool? _IsComplete;
+        private bool? _IsDelivered;
 
         public int? ShoppingListId
         {
             get => _ShoppingListId;
             set { _ShoppingListId = value; Changed(nameof(ShoppingListId)); }
         }
-        public string RequesterId
+        public IntelliTect.TextTrolley.Web.Models.RequesterDtoGen Requester
         {
-            get => _RequesterId;
-            set { _RequesterId = value; Changed(nameof(RequesterId)); }
+            get => _Requester;
+            set { _Requester = value; Changed(nameof(Requester)); }
         }
-        public System.Collections.Generic.ICollection<int> ApplicationUserIds
+        public System.Collections.Generic.ICollection<IntelliTect.TextTrolley.Web.Models.ApplicationUserDtoGen> ApplicationUsers
         {
-            get => _ApplicationUserIds;
-            set { _ApplicationUserIds = value; Changed(nameof(ApplicationUserIds)); }
+            get => _ApplicationUsers;
+            set { _ApplicationUsers = value; Changed(nameof(ApplicationUsers)); }
+        }
+        public System.Collections.Generic.ICollection<IntelliTect.TextTrolley.Web.Models.ShoppingListItemDtoGen> Items
+        {
+            get => _Items;
+            set { _Items = value; Changed(nameof(Items)); }
+        }
+        public bool? IsComplete
+        {
+            get => _IsComplete;
+            set { _IsComplete = value; Changed(nameof(IsComplete)); }
+        }
+        public bool? IsDelivered
+        {
+            get => _IsDelivered;
+            set { _IsDelivered = value; Changed(nameof(IsDelivered)); }
         }
 
         /// <summary>
@@ -41,8 +59,35 @@ namespace IntelliTect.TextTrolley.Web.Models
             var includes = context.Includes;
 
             this.ShoppingListId = obj.ShoppingListId;
-            this.RequesterId = obj.RequesterId;
-            this.ApplicationUserIds = obj.ApplicationUserIds;
+            this.IsComplete = obj.IsComplete;
+            this.IsDelivered = obj.IsDelivered;
+            if (tree == null || tree[nameof(this.Requester)] != null)
+                this.Requester = obj.Requester.MapToDto<IntelliTect.TextTrolley.Data.Models.Requester, RequesterDtoGen>(context, tree?[nameof(this.Requester)]);
+
+            var propValApplicationUsers = obj.ApplicationUsers;
+            if (propValApplicationUsers != null && (tree == null || tree[nameof(this.ApplicationUsers)] != null))
+            {
+                this.ApplicationUsers = propValApplicationUsers
+                    .OrderBy(f => f.Name)
+                    .Select(f => f.MapToDto<IntelliTect.TextTrolley.Data.Models.ApplicationUser, ApplicationUserDtoGen>(context, tree?[nameof(this.ApplicationUsers)])).ToList();
+            }
+            else if (propValApplicationUsers == null && tree?[nameof(this.ApplicationUsers)] != null)
+            {
+                this.ApplicationUsers = new ApplicationUserDtoGen[0];
+            }
+
+            var propValItems = obj.Items;
+            if (propValItems != null && (tree == null || tree[nameof(this.Items)] != null))
+            {
+                this.Items = propValItems
+                    .OrderBy(f => f.Name)
+                    .Select(f => f.MapToDto<IntelliTect.TextTrolley.Data.Models.ShoppingListItem, ShoppingListItemDtoGen>(context, tree?[nameof(this.Items)])).ToList();
+            }
+            else if (propValItems == null && tree?[nameof(this.Items)] != null)
+            {
+                this.Items = new ShoppingListItemDtoGen[0];
+            }
+
         }
 
         /// <summary>
@@ -55,8 +100,8 @@ namespace IntelliTect.TextTrolley.Web.Models
             if (OnUpdate(entity, context)) return;
 
             if (ShouldMapTo(nameof(ShoppingListId))) entity.ShoppingListId = (ShoppingListId ?? entity.ShoppingListId);
-            if (ShouldMapTo(nameof(RequesterId))) entity.RequesterId = RequesterId;
-            if (ShouldMapTo(nameof(ApplicationUserIds))) entity.ApplicationUserIds = ApplicationUserIds?.ToList();
+            if (ShouldMapTo(nameof(IsComplete))) entity.IsComplete = (IsComplete ?? entity.IsComplete);
+            if (ShouldMapTo(nameof(IsDelivered))) entity.IsDelivered = (IsDelivered ?? entity.IsDelivered);
         }
 
         /// <summary>

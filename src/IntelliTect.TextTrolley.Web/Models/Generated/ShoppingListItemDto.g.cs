@@ -14,7 +14,8 @@ namespace IntelliTect.TextTrolley.Web.Models
 
         private int? _ShoppingListItemId;
         private string _Name;
-        private int? _ShoppingListId;
+        private string _OriginalName;
+        private IntelliTect.TextTrolley.Web.Models.ShoppingListDtoGen _ShoppingList;
         private bool? _Purchased;
 
         public int? ShoppingListItemId
@@ -27,10 +28,15 @@ namespace IntelliTect.TextTrolley.Web.Models
             get => _Name;
             set { _Name = value; Changed(nameof(Name)); }
         }
-        public int? ShoppingListId
+        public string OriginalName
         {
-            get => _ShoppingListId;
-            set { _ShoppingListId = value; Changed(nameof(ShoppingListId)); }
+            get => _OriginalName;
+            set { _OriginalName = value; Changed(nameof(OriginalName)); }
+        }
+        public IntelliTect.TextTrolley.Web.Models.ShoppingListDtoGen ShoppingList
+        {
+            get => _ShoppingList;
+            set { _ShoppingList = value; Changed(nameof(ShoppingList)); }
         }
         public bool? Purchased
         {
@@ -48,8 +54,11 @@ namespace IntelliTect.TextTrolley.Web.Models
 
             this.ShoppingListItemId = obj.ShoppingListItemId;
             this.Name = obj.Name;
-            this.ShoppingListId = obj.ShoppingListId;
+            this.OriginalName = obj.OriginalName;
             this.Purchased = obj.Purchased;
+            if (tree == null || tree[nameof(this.ShoppingList)] != null)
+                this.ShoppingList = obj.ShoppingList.MapToDto<IntelliTect.TextTrolley.Data.Models.ShoppingList, ShoppingListDtoGen>(context, tree?[nameof(this.ShoppingList)]);
+
         }
 
         /// <summary>
@@ -63,7 +72,7 @@ namespace IntelliTect.TextTrolley.Web.Models
 
             if (ShouldMapTo(nameof(ShoppingListItemId))) entity.ShoppingListItemId = (ShoppingListItemId ?? entity.ShoppingListItemId);
             if (ShouldMapTo(nameof(Name))) entity.Name = Name;
-            if (ShouldMapTo(nameof(ShoppingListId))) entity.ShoppingListId = (ShoppingListId ?? entity.ShoppingListId);
+            if (ShouldMapTo(nameof(OriginalName))) entity.OriginalName = OriginalName;
             if (ShouldMapTo(nameof(Purchased))) entity.Purchased = (Purchased ?? entity.Purchased);
         }
 
@@ -77,11 +86,11 @@ namespace IntelliTect.TextTrolley.Web.Models
             var entity = new IntelliTect.TextTrolley.Data.Models.ShoppingListItem()
             {
                 Name = Name,
+                OriginalName = OriginalName,
             };
 
             if (OnUpdate(entity, context)) return entity;
             if (ShouldMapTo(nameof(ShoppingListItemId))) entity.ShoppingListItemId = (ShoppingListItemId ?? entity.ShoppingListItemId);
-            if (ShouldMapTo(nameof(ShoppingListId))) entity.ShoppingListId = (ShoppingListId ?? entity.ShoppingListId);
             if (ShouldMapTo(nameof(Purchased))) entity.Purchased = (Purchased ?? entity.Purchased);
 
             return entity;
