@@ -2,7 +2,7 @@
   <c-loader-status :loaders="{
         'no-initial-content no-error-content': [shoppingLists.$load],
     }" #default>
-    <v-card flat v-for="list in shoppingLists.$items">
+    <v-card flat v-for="list in shoppingLists.$items" color="transparent">
       <ShoppingList :shoppingList="list" />
     </v-card>
   </c-loader-status>

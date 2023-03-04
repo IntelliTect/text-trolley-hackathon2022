@@ -5,8 +5,7 @@
                    :icon="getIcon()"
                    @click="toggleItem()"
                    width="70vw">
-    <v-card @click.stop="edit" :ripple="false" flat :color="listItem.purchased ? 'indigo-lighten-5' : 'grey-lighten-3'">
-
+    <v-card @click.stop="edit" :ripple="false" flat>
       <v-row class="ma-1" dense align="center">
         <v-col>
           <span v-if="!isEditing" :class="props.listItem.purchased ? 'text-decoration-line-through' : ''">
@@ -29,9 +28,11 @@
 <script setup lang="ts">
   import { ShoppingListItemViewModel } from "../viewmodels.g";
   import { getCurrentInstance } from 'vue';
+  import { useTheme } from "vuetify/lib/framework.mjs"
 
   const props = defineProps<{ listItem: ShoppingListItemViewModel }>();
   const vue = getCurrentInstance();
+  const theme = useTheme();
 
   let isEditing = ref(false);
 

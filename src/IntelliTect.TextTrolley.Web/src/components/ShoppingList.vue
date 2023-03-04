@@ -14,8 +14,7 @@
       </template>
     </v-timeline>
 
-    <v-card flat width="100%">
-
+    <v-card  color="transparent" flat width="100%">
       <v-btn @click="openDialog()" color="primary" icon="fa-solid fa-plus" class="add-btn" />
     </v-card>
 
