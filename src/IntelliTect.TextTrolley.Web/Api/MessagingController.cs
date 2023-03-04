@@ -1,6 +1,7 @@
-﻿using IntelliTect.TextTrolley.Data.Models;
+using IntelliTect.TextTrolley.Data.Models;
 using IntelliTect.TextTrolley.Data.Services;
 using IntelliTect.TextTrolley.Web.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Twilio.AspNet.Common;
 using Twilio.AspNet.Core;
@@ -10,6 +11,7 @@ using Twilio.TwiML.Messaging;
 namespace IntelliTect.TextTrolley.Web.Api;
 
 [Route("api/messaging")]
+[AllowAnonymous]
 public class MessagingController : TwilioController
 {
     public MessagingController(ISmsMessageHandler messageHandler)

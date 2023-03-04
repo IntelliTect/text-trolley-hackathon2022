@@ -6,6 +6,46 @@ import {
 
 
 const domain: Domain = { enums: {}, types: {}, services: {} }
+export const ApplicationRole = domain.types.ApplicationRole = {
+  name: "ApplicationRole",
+  displayName: "Application Role",
+  get displayProp() { return this.props.name }, 
+  type: "model",
+  controllerRoute: "ApplicationRole",
+  get keyProp() { return this.props.id }, 
+  behaviorFlags: 7,
+  props: {
+    id: {
+      name: "id",
+      displayName: "Id",
+      type: "number",
+      role: "primaryKey",
+      hidden: 3,
+    },
+    name: {
+      name: "name",
+      displayName: "Name",
+      type: "string",
+      role: "value",
+    },
+    normalizedName: {
+      name: "normalizedName",
+      displayName: "Normalized Name",
+      type: "string",
+      role: "value",
+    },
+    concurrencyStamp: {
+      name: "concurrencyStamp",
+      displayName: "Concurrency Stamp",
+      type: "string",
+      role: "value",
+    },
+  },
+  methods: {
+  },
+  dataSources: {
+  },
+}
 export const ApplicationUser = domain.types.ApplicationUser = {
   name: "ApplicationUser",
   displayName: "Application User",
@@ -419,6 +459,7 @@ interface AppDomain extends Domain {
   enums: {
   }
   types: {
+    ApplicationRole: typeof ApplicationRole
     ApplicationUser: typeof ApplicationUser
     Requester: typeof Requester
     ShoppingList: typeof ShoppingList

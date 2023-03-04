@@ -1,6 +1,31 @@
 import * as metadata from './metadata.g'
 import { Model, DataSource, convertToModel, mapToModel } from 'coalesce-vue/lib/model'
 
+export interface ApplicationRole extends Model<typeof metadata.ApplicationRole> {
+  id: number | null
+  name: string | null
+  normalizedName: string | null
+  concurrencyStamp: string | null
+}
+export class ApplicationRole {
+  
+  /** Mutates the input object and its descendents into a valid ApplicationRole implementation. */
+  static convert(data?: Partial<ApplicationRole>): ApplicationRole {
+    return convertToModel(data || {}, metadata.ApplicationRole) 
+  }
+  
+  /** Maps the input object and its descendents to a new, valid ApplicationRole implementation. */
+  static map(data?: Partial<ApplicationRole>): ApplicationRole {
+    return mapToModel(data || {}, metadata.ApplicationRole) 
+  }
+  
+  /** Instantiate a new ApplicationRole, optionally basing it on the given data. */
+  constructor(data?: Partial<ApplicationRole> | {[k: string]: any}) {
+      Object.assign(this, ApplicationRole.map(data || {}));
+  }
+}
+
+
 export interface ApplicationUser extends Model<typeof metadata.ApplicationUser> {
   name: string | null
   id: number | null
