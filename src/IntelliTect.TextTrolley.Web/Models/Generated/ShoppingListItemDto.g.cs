@@ -15,6 +15,7 @@ namespace IntelliTect.TextTrolley.Web.Models
         private int? _ShoppingListItemId;
         private string _Name;
         private string _OriginalName;
+        private int? _ShoppingListId;
         private IntelliTect.TextTrolley.Web.Models.ShoppingListDtoGen _ShoppingList;
         private bool? _Purchased;
 
@@ -32,6 +33,11 @@ namespace IntelliTect.TextTrolley.Web.Models
         {
             get => _OriginalName;
             set { _OriginalName = value; Changed(nameof(OriginalName)); }
+        }
+        public int? ShoppingListId
+        {
+            get => _ShoppingListId;
+            set { _ShoppingListId = value; Changed(nameof(ShoppingListId)); }
         }
         public IntelliTect.TextTrolley.Web.Models.ShoppingListDtoGen ShoppingList
         {
@@ -55,6 +61,7 @@ namespace IntelliTect.TextTrolley.Web.Models
             this.ShoppingListItemId = obj.ShoppingListItemId;
             this.Name = obj.Name;
             this.OriginalName = obj.OriginalName;
+            this.ShoppingListId = obj.ShoppingListId;
             this.Purchased = obj.Purchased;
             if (tree == null || tree[nameof(this.ShoppingList)] != null)
                 this.ShoppingList = obj.ShoppingList.MapToDto<IntelliTect.TextTrolley.Data.Models.ShoppingList, ShoppingListDtoGen>(context, tree?[nameof(this.ShoppingList)]);
@@ -73,6 +80,7 @@ namespace IntelliTect.TextTrolley.Web.Models
             if (ShouldMapTo(nameof(ShoppingListItemId))) entity.ShoppingListItemId = (ShoppingListItemId ?? entity.ShoppingListItemId);
             if (ShouldMapTo(nameof(Name))) entity.Name = Name;
             if (ShouldMapTo(nameof(OriginalName))) entity.OriginalName = OriginalName;
+            if (ShouldMapTo(nameof(ShoppingListId))) entity.ShoppingListId = (ShoppingListId ?? entity.ShoppingListId);
             if (ShouldMapTo(nameof(Purchased))) entity.Purchased = (Purchased ?? entity.Purchased);
         }
 
@@ -91,6 +99,7 @@ namespace IntelliTect.TextTrolley.Web.Models
 
             if (OnUpdate(entity, context)) return entity;
             if (ShouldMapTo(nameof(ShoppingListItemId))) entity.ShoppingListItemId = (ShoppingListItemId ?? entity.ShoppingListItemId);
+            if (ShouldMapTo(nameof(ShoppingListId))) entity.ShoppingListId = (ShoppingListId ?? entity.ShoppingListId);
             if (ShouldMapTo(nameof(Purchased))) entity.Purchased = (Purchased ?? entity.Purchased);
 
             return entity;

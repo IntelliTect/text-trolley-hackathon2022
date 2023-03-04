@@ -30,11 +30,11 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
-        <v-list-item link to="/my-list">
+        <v-list-item link to="/shopping-lists">
           <template #prepend>
             <v-icon>fa-solid fa-list-check</v-icon>
           </template>
-          <v-list-item-title>My List</v-list-item-title>
+          <v-list-item-title>Shopping Lists</v-list-item-title>
         </v-list-item>
 
         <v-list-item link to="/register">

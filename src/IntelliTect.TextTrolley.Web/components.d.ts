@@ -24,8 +24,6 @@ declare module '@vue/runtime-core' {
     VCol: typeof import('vuetify/components')['VCol']
     VContainer: typeof import('vuetify/components')['VContainer']
     VDivider: typeof import('vuetify/components')['VDivider']
-    VForm: typeof import('vuetify/components')['VForm']
-    VHover: typeof import('vuetify/components')['VHover']
     VIcon: typeof import('vuetify/components')['VIcon']
     VList: typeof import('vuetify/components')['VList']
     VListItem: typeof import('vuetify/components')['VListItem']
@@ -35,8 +33,6 @@ declare module '@vue/runtime-core' {
     VRow: typeof import('vuetify/components')['VRow']
     VSpacer: typeof import('vuetify/components')['VSpacer']
     VTextField: typeof import('vuetify/components')['VTextField']
-    VTimeline: typeof import('vuetify/components')['VTimeline']
-    VTimelineItem: typeof import('vuetify/components')['VTimelineItem']
     VToolbarTitle: typeof import('vuetify/components')['VToolbarTitle']
   }
 }

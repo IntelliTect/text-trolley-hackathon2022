@@ -71,6 +71,11 @@ export interface ShoppingListViewModel extends $models.ShoppingList {
 }
 export class ShoppingListViewModel extends ViewModel<$models.ShoppingList, $apiClients.ShoppingListApiClient, number> implements $models.ShoppingList  {
   
+  
+  public addToItems() {
+    return this.$addChild('items') as ShoppingListItemViewModel
+  }
+  
   constructor(initialData?: DeepPartial<$models.ShoppingList> | null) {
     super($metadata.ShoppingList, new $apiClients.ShoppingListApiClient(), initialData)
   }
@@ -89,6 +94,7 @@ export interface ShoppingListItemViewModel extends $models.ShoppingListItem {
   shoppingListItemId: number | null;
   name: string | null;
   originalName: string | null;
+  shoppingListId: number | null;
   shoppingList: ShoppingListViewModel | null;
   purchased: boolean | null;
 }
