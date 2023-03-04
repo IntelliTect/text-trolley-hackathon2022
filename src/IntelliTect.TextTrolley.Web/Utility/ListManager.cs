@@ -1,8 +1,7 @@
 ﻿using IntelliTect.TextTrolley.Data;
+using IntelliTect.TextTrolley.Data.Models;
+using IntelliTect.TextTrolley.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
-using OpenAI_API;
-using OpenAI_API.Completions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace IntelliTect.TextTrolley.Web.Utility;
 
@@ -10,27 +9,52 @@ public class ListManager : IListManager
 {
     private readonly AppDbContext _dbContext;
 
+    public IShoppingListItemRepository ShoppingListItemRepo { get; }
 
-    public ListManager(AppDbContext context)
+    public ListManager(AppDbContext context, IShoppingListItemRepository shoppingListItemRepo)
     {
         _dbContext = context;
+        ShoppingListItemRepo = shoppingListItemRepo;
     }
 
 
-    Task<List<string>> IListManager.AddItemsToList(int userId, List<string> items)
+    public async Task<List<string>> AddItemsToList(Requester requester, List<string> items)
     {
-        throw new NotImplementedException();
+
+        var convertedItems = items.Select(i => new ShoppingListItem()
+        {
+            Name = i,
+            OriginalName = i,
+            Purchased = false,
+            ShoppingList = requester.ActiveShoppingList,
+            ShoppingListItemId = requester.ActiveShoppingListKey
+        });
+
+
+        foreach (ShoppingListItem item in convertedItems)
+        {
+            await ShoppingListItemRepo.AddItem(item);
+        }
+
+      
+        var list = await _dbContext.ShoppingList.FirstAsync(l => l.Requester.RequesterId == requester.RequesterId);
+
+        var stringList = list.Items.Select(i => i.Name).ToList();
+
+        return stringList;
     }
 
-    async Task<List<string>> IListManager.RemoveItemsFromList(int userId, List<string> items)
+    async Task<List<string>> IListManager.RemoveItemsFromList(Requester requester, List<string> items)
     {
+        var userId = requester.RequesterId;
+
         var list = await _dbContext.ShoppingList.FirstAsync(l => l.Requester.RequesterId == userId);
 
         var stringList = list.Items.Select(i => new { i.Name, i.ShoppingListItemId}).ToList();
 
         var indices = ListTools.GetIndincesToRemove(stringList.Select(i=>i.Name).ToList(), items);
 
-
+        // might have duplicate indices need to remove those todo
         var idsOfItemsToRemove = indices.Select(i => stringList[i].ShoppingListItemId);
 
         // probably a more eloquent way to do this
@@ -42,9 +66,9 @@ public class ListManager : IListManager
 
     }
 
-    async Task<List<string>> IListManager.GetList(int userId)
+     async Task<List<string>> IListManager.GetList(int userId)
     {
-       var list= await  _dbContext.ShoppingList.FirstAsync(l => l.Requester.RequesterId == userId);
+       var list = await  _dbContext.ShoppingList.FirstAsync(l => l.Requester.RequesterId == userId);
 
         return list.Items.Select(i => i.Name).ToList();
     }

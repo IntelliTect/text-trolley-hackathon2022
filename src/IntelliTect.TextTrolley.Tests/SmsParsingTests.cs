@@ -65,6 +65,9 @@ public class SmsParsingTests : IClassFixture<SmsParserFixture>
             },
             new object[] { "1x dragonfruit\r\n", UserIntent.AddItem },
             new object[] { "dragonfruit\r\n", UserIntent.AddItem },
+            new object[] { "help\r\n", UserIntent.Help },
+            new object[] { "show list\r\n", UserIntent.ViewList },
+            new object[] { "whats on my list?\r\n", UserIntent.ViewList },
             new object[] { "toilet paper\r\n", UserIntent.AddItem }
         };
 

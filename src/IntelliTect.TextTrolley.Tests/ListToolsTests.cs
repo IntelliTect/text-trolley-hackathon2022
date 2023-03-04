@@ -33,6 +33,12 @@ public class ListToolsTests
                 new List<string>() { "cream" },
                 new int[] { 3 }
             },
+            new object[]
+            {
+                new List<string>() { "ice", "ice cream", "shaving cream", "cream" },
+                new List<string>() { "cream", "ice cream" },
+                new int[] { 3,1 }
+            },
         };
 
     [Theory]

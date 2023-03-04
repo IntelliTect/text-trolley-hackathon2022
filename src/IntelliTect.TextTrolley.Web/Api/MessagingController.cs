@@ -1,21 +1,23 @@
 ﻿using IntelliTect.TextTrolley.Data.Models;
 using IntelliTect.TextTrolley.Data.Services;
+using IntelliTect.TextTrolley.Web.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Twilio.AspNet.Common;
 using Twilio.AspNet.Core;
 using Twilio.TwiML;
+using Twilio.TwiML.Messaging;
 
 namespace IntelliTect.TextTrolley.Web.Api;
 
 [Route("api/messaging")]
 public class MessagingController : TwilioController
 {
-    public MessagingController(IMessagingService messagingService)
+    public MessagingController(ISmsMessageHandler messageHandler)
     {
-        MessagingService = messagingService ?? throw new ArgumentNullException(nameof(messagingService));
+        MessageHandler = messageHandler ?? throw new ArgumentNullException(nameof(messageHandler));
     }
 
-    private IMessagingService MessagingService { get; }
+    private ISmsMessageHandler MessageHandler { get; }
 
     [HttpPost("receivemessage")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -25,11 +27,13 @@ public class MessagingController : TwilioController
         var inboundMessage = new InboundMessage(inboundRequest.MessageSid, inboundRequest.Body,
             inboundRequest.MessageStatus, inboundRequest.OptOutType, inboundRequest.MessagingServiceSid,
             inboundRequest.From);
-        var requester = await MessagingService.GetOrCreateRequester(inboundMessage);
 
-        var item = MessagingService.ConvertMessageToListItem(requester, inboundMessage);
+        var response = await MessageHandler.HandleSmsAsync(inboundMessage);
 
-        await MessagingService.AddNewListItem(item);
+        var reply = new MessagingResponse();
+
+        reply.Message(body: response, to: inboundRequest.From);
+
 
         return Ok(new TwiMLResult(new MessagingResponse()));
     }
