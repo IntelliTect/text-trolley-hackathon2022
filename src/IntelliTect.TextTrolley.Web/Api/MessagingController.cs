@@ -7,7 +7,7 @@ using Twilio.TwiML;
 
 namespace IntelliTect.TextTrolley.Web.Api;
 
-[ApiController]
+[Route("api/messaging")]
 public class MessagingController : TwilioController
 {
     public MessagingController(IMessagingService messagingService)
@@ -17,7 +17,7 @@ public class MessagingController : TwilioController
 
     private IMessagingService MessagingService { get; }
 
-    [HttpPost]
+    [HttpPost("receivemessage")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<TwiMLResult>> ReceiveMessage(SmsRequest inboundRequest)
