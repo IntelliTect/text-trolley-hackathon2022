@@ -23,18 +23,13 @@ declare module '@vue/runtime-core' {
     VCol: typeof import('vuetify/components')['VCol']
     VContainer: typeof import('vuetify/components')['VContainer']
     VDivider: typeof import('vuetify/components')['VDivider']
-    VHover: typeof import('vuetify/components')['VHover']
     VIcon: typeof import('vuetify/components')['VIcon']
     VList: typeof import('vuetify/components')['VList']
     VListItem: typeof import('vuetify/components')['VListItem']
-    VListItemContent: typeof import('vuetify/components')['VListItemContent']
     VListItemTitle: typeof import('vuetify/components')['VListItemTitle']
     VMain: typeof import('vuetify/components')['VMain']
     VNavigationDrawer: typeof import('vuetify/components')['VNavigationDrawer']
     VRow: typeof import('vuetify/components')['VRow']
-    VSpacer: typeof import('vuetify/components')['VSpacer']
-    VTimeline: typeof import('vuetify/components')['VTimeline']
-    VTimelineItem: typeof import('vuetify/components')['VTimelineItem']
     VToolbarTitle: typeof import('vuetify/components')['VToolbarTitle']
   }
 }
