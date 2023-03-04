@@ -58,12 +58,18 @@ export const Requester = domain.types.Requester = {
       displayName: "Requester Name",
       type: "string",
       role: "value",
+      rules: {
+        required: val => (val != null && val !== '') || "Requester Name is required.",
+      }
     },
     requesterNumber: {
       name: "requesterNumber",
       displayName: "Requester Number",
       type: "string",
       role: "value",
+      rules: {
+        required: val => (val != null && val !== '') || "Requester Number is required.",
+      }
     },
   },
   methods: {
@@ -92,6 +98,9 @@ export const ShoppingList = domain.types.ShoppingList = {
       displayName: "Requester Id",
       type: "string",
       role: "value",
+      rules: {
+        required: val => (val != null && val !== '') || "Requester Id is required.",
+      }
     },
     applicationUserIds: {
       name: "applicationUserIds",
@@ -104,6 +113,9 @@ export const ShoppingList = domain.types.ShoppingList = {
         type: "number",
       },
       role: "value",
+      rules: {
+        required: val => val != null || "Application User Ids is required.",
+      }
     },
   },
   methods: {
@@ -132,12 +144,18 @@ export const ShoppingListItem = domain.types.ShoppingListItem = {
       displayName: "Name",
       type: "string",
       role: "value",
+      rules: {
+        required: val => (val != null && val !== '') || "Name is required.",
+      }
     },
     shoppingListId: {
       name: "shoppingListId",
       displayName: "Shopping List Id",
       type: "number",
       role: "value",
+      rules: {
+        required: val => val != null || "Shopping List Id is required.",
+      }
     },
   },
   methods: {
