@@ -1,4 +1,4 @@
-﻿using OpenAI_API;
+using OpenAI_API;
 using OpenAI_API.Completions;
 
 namespace IntelliTect.TextTrolley.Web.Utility;
@@ -6,7 +6,7 @@ namespace IntelliTect.TextTrolley.Web.Utility;
 public class SmsParser : ISmsParser
 {
     private OpenAIAPI _Client; 
-    // a constructor that gets an OpenAIAPI client from the DI container and assigns it to a field for this class
+
     public SmsParser(OpenAIAPI client)
     {
         _Client = client;
@@ -14,14 +14,20 @@ public class SmsParser : ISmsParser
 
     public async  Task<bool> InterpretNegativeResponse(string text)
     {
-      
-
+        if (text.ToLower().Contains("n"))
+        {
+            return true;
+        }
         return false;
     }
 
     public async Task<bool> InterpretPostiveResponse(string text)
     {
-        throw new NotImplementedException();
+        if (text.ToLower().Contains("y"))
+        {
+            return true;
+        }
+        return false;
     }
 
     public async Task<UserIntent> InterpretUserIntent(string text)

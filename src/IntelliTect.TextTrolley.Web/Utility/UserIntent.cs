@@ -1,9 +1,9 @@
-﻿namespace IntelliTect.TextTrolley.Web.Utility;
+namespace IntelliTect.TextTrolley.Web.Utility;
 
 public enum UserIntent
 {
     AddItem = 1,
-    RemoveItem,
-    ClearList,
-    Unknown
+    RemoveItem = 2,
+    ClearList = 3,
+    Unknown = 4
 }
