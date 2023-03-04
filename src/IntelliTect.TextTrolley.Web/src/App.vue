@@ -28,10 +28,10 @@
     <v-card-title>
       Welcome!
     </v-card-title>
-    <v-alert v-if="error" :type="errorType">
+    <v-alert class="pa-10 ma-10" v-if="error" :type="errorType">
       {{ errorMessage }}
      </v-alert>
-      <v-form v-model="valid">
+      <v-form>
         <v-container>
           <v-row>
             <v-text-field class="pa-10"
@@ -50,7 +50,7 @@
       </v-form>
       <v-card-actions>
         <v-spacer />
-        <v-btn class="primary" @click="login()"> Login </v-btn>
+        <v-btn color="primary" @click="login()"> Login </v-btn>
         <v-btn @click="closeLogin()"> Cancel</v-btn>
       </v-card-actions>
   </v-card>
@@ -140,12 +140,16 @@
       errorMessage.value = loginService.loginUser.message ??
         'Invalid login attempt';
     }
+    username.value = '';
+    password.value = '';
   }
 
   function openLogin() {
     loginDialogOpen.value = true;
   }
   function closeLogin() {
+    username.value = '';
+    password.value = '';
     loginDialogOpen.value = false;
   }
 
