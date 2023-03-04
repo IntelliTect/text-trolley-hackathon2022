@@ -30,7 +30,22 @@ const vuetify = createVuetify({
     themes: {
       light: {
         colors: {
-          primary: "#127815",
+          primary: "#6202EE",
+          secondary: "#9043C3",
+          error: "#BD2B48",
+          success: "#4CAF50",
+          warning: "#E89556",
+          info: "#2196F3"
+        },
+      },
+      dark: {
+        colors: {
+          primary: "#6202EE",
+          secondary: "#9043C3",
+          error: "#BD2B48",
+          success: "#4CAF50",
+          warning: "#E89556",
+          info: "#2196F3"
         },
       },
     },

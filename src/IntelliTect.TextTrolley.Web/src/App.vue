@@ -1,13 +1,26 @@
 <template>
   <v-app id="vue-app">
     <v-app-bar color="primary">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>
-        <router-link to="/" style="color: inherit">
-          Coalesce Vue Template
-        </router-link>
-      </v-toolbar-title>
-    </v-app-bar>
+    <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+    <v-toolbar-title>
+      <router-link to="/" style="color: inherit">
+        Coalesce Vue Template
+      </router-link>
+    </v-toolbar-title>
+
+
+      <template v-slot:append>
+        <v-btn icon @click="toggleTheme">
+          <v-icon v-if="isDarkMode()">
+            fa-solid fa-lightbulb
+          </v-icon>
+          <v-icon v-else>
+            fa-regular fa-lightbulb
+          </v-icon>
+        </v-btn>
+      </template>
+  </v-app-bar>
+
     <v-navigation-drawer v-model="drawer">
       <v-list>
         <v-list-item link to="/">
@@ -45,7 +58,22 @@
 </template>
 
 <script setup lang="ts">
-const drawer = ref<boolean | null>(null);
+  import { useTheme } from "vuetify/lib/framework.mjs"
+
+  const drawer = ref<boolean | null>(null)
+  const theme = useTheme()
+
+  theme.global.name.value = localStorage.getItem("DARK_THEME") ?? "dark";
+
+  function toggleTheme() {
+    theme.global.name.value = isDarkMode() ? 'light' : 'dark'
+    localStorage.setItem("DARK_THEME", theme.global.name.value);
+  }
+
+  function isDarkMode() {
+    return theme.global.current.value.dark
+  }
+
 </script>
 
 <style lang="scss">
