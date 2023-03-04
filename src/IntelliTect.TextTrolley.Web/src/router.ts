@@ -20,6 +20,14 @@ export default createRouter({
       component: () => import("./views/Register.vue"),
     },
     {
+      path: "/shopping-lists/:listId",
+      name: "shopping-list",
+      component: () => import("./views/ShoppingList.vue"),
+      props: (r) => ({
+        listId: r.params.listId,
+      }),
+    },
+    {
       path: "/coalesce-example",
       name: "coalesce-example",
       component: () => import("./views/CoalesceExample.vue"),
