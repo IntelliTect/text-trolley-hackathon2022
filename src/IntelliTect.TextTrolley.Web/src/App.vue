@@ -4,7 +4,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>
         <router-link to="/" style="color: inherit">
-          Coalesce Vue Template
+          Welcome to the Text-Trolley!
         </router-link>
       </v-toolbar-title>       
       <template v-slot:append>
@@ -138,8 +138,10 @@
       errorMessage.value = loginService.loginUser.message ??
         'Invalid login attempt';
     }
-    username.value = '';
-    password.value = '';
+    if (!error) {
+      closeLogin();
+    }
+   
   }
 
   function openLogin() {
@@ -148,6 +150,7 @@
   function closeLogin() {
     username.value = '';
     password.value = '';
+    errorMessage.value = '';
     loginDialogOpen.value = false;
   }
 
