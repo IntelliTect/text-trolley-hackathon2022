@@ -2,6 +2,6 @@
 
 public interface ISmsMessageHandler
 { 
-    Task<string> HandleSmsAsync(string message, string userId);
+    Task<string> HandleSmsAsync(string message, int userId);
 
 }
