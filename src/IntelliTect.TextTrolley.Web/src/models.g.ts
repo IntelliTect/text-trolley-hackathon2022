@@ -2,9 +2,8 @@ import * as metadata from './metadata.g'
 import { Model, DataSource, convertToModel, mapToModel } from 'coalesce-vue/lib/model'
 
 export interface ApplicationUser extends Model<typeof metadata.ApplicationUser> {
-  applicationUserId: number | null
   name: string | null
-  id: string | null
+  id: number | null
   userName: string | null
   normalizedUserName: string | null
   email: string | null

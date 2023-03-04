@@ -12,16 +12,9 @@ export const ApplicationUser = domain.types.ApplicationUser = {
   get displayProp() { return this.props.name }, 
   type: "model",
   controllerRoute: "ApplicationUser",
-  get keyProp() { return this.props.applicationUserId }, 
+  get keyProp() { return this.props.id }, 
   behaviorFlags: 7,
   props: {
-    applicationUserId: {
-      name: "applicationUserId",
-      displayName: "Application User Id",
-      type: "number",
-      role: "primaryKey",
-      hidden: 3,
-    },
     name: {
       name: "name",
       displayName: "Name",
@@ -35,7 +28,7 @@ export const ApplicationUser = domain.types.ApplicationUser = {
     id: {
       name: "id",
       displayName: "Id",
-      type: "string",
+      type: "number",
       role: "primaryKey",
       hidden: 3,
     },
