@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace IntelliTect.TextTrolley.Data.Models;
+
+[AllowAnonymous]
 public class ShoppingList
 {
     public int ShoppingListId { get; set; }

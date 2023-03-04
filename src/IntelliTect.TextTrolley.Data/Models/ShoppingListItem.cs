@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntelliTect.TextTrolley.Data.Models;
 
+[AllowAnonymous]
 public class ShoppingListItem
 {
     public int ShoppingListItemId { get; set; }
