@@ -1,26 +1,60 @@
 <template>
   <v-app id="vue-app">
     <v-app-bar color="primary">
-    <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-    <v-toolbar-title>
-      <router-link to="/" style="color: inherit">
-        Coalesce Vue Template
-      </router-link>
-    </v-toolbar-title>
-
-
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title>
+        <router-link to="/" style="color: inherit">
+          Coalesce Vue Template
+        </router-link>
+      </v-toolbar-title>       
       <template v-slot:append>
-        <v-btn icon @click="toggleTheme">
-          <v-icon v-if="isDarkMode()">
-            fa-solid fa-lightbulb
-          </v-icon>
-          <v-icon v-else>
-            fa-regular fa-lightbulb
+        <v-btn icon @click="openLogin()">
+          <v-icon>
+            fas fa-right-to-bracket
           </v-icon>
         </v-btn>
+          <v-btn icon @click="toggleTheme">
+            <v-icon v-if="isDarkMode()">
+              fa-solid fa-lightbulb
+            </v-icon>
+            <v-icon v-else>
+              fa-regular fa-lightbulb
+            </v-icon>
+          </v-btn>
       </template>
-  </v-app-bar>
-
+</v-app-bar>
+<v-dialog v-model="loginDialogOpen" width="30%">
+  <v-card>
+    <v-card-title>
+      Welcome!
+    </v-card-title>
+    <v-alert class="pa-10 ma-10" v-if="error" :type="'error'">
+      {{ errorMessage }}
+     </v-alert>
+      <v-form>
+        <v-container>
+          <v-row>
+            <v-text-field class="pa-10"
+                          v-model="username"
+                          label="Username"
+                          required></v-text-field>
+          </v-row>
+          <v-row>
+            <v-text-field class="pa-10"
+                          v-model="password"
+                          :type="'password'"
+                          label="Password"
+                          required></v-text-field>
+          </v-row>
+        </v-container>
+      </v-form>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn color="primary" @click="login()"> Login </v-btn>
+        <v-btn @click="closeLogin()"> Cancel</v-btn>
+      </v-card-actions>
+  </v-card>
+</v-dialog>
     <v-navigation-drawer v-model="drawer">
       <v-list>
         <v-list-item link to="/">
@@ -35,6 +69,20 @@
             <v-icon>fa-solid fa-list-check</v-icon>
           </template>
           <v-list-item-title>Shopping Lists</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link to="/register">
+          <template #prepend>
+            <v-icon>fa-solid fa-user</v-icon>
+          </template>
+          <v-list-item-title>Register</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item link to="/coalesce-example">
+          <template #prepend>
+            <v-icon>fas fa-palette</v-icon>
+          </template>
+          <v-list-item-title>Custom Page Example</v-list-item-title>
         </v-list-item>
 
         <v-list-item link to="/admin">
@@ -59,15 +107,48 @@
 
 <script setup lang="ts">
   import { useTheme } from "vuetify/lib/framework.mjs"
+  import { LoginServiceViewModel } from '@/viewmodels.g';
 
   const drawer = ref<boolean | null>(null)
   const theme = useTheme()
-
+  const loginService = new LoginServiceViewModel();
+  let loginDialogOpen = ref(false);
+  let username = ref('');
+  let password = ref('');
+  let error = ref(false);
+  let errorMessage = ref('');
   theme.global.name.value = localStorage.getItem("DARK_THEME") ?? "dark";
 
   function toggleTheme() {
     theme.global.name.value = isDarkMode() ? 'light' : 'dark'
     localStorage.setItem("DARK_THEME", theme.global.name.value);
+  }
+
+  async function login() {
+    try {
+      error.value = false;
+      errorMessage.value = '';
+      await loginService.loginUser(
+        username.value,
+        password.value
+      );
+    }
+    catch (e) {
+      error.value = true;
+      errorMessage.value = loginService.loginUser.message ??
+        'Invalid login attempt';
+    }
+    username.value = '';
+    password.value = '';
+  }
+
+  function openLogin() {
+    loginDialogOpen.value = true;
+  }
+  function closeLogin() {
+    username.value = '';
+    password.value = '';
+    loginDialogOpen.value = false;
   }
 
   function isDarkMode() {

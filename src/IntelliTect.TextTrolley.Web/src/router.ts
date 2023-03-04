@@ -15,6 +15,11 @@ export default createRouter({
       component: () => import("./views/AllShoppingLists.vue"),
     },
     {
+      path: "/register",
+      name: "register",
+      component: () => import("./views/Register.vue"),
+    },
+    {
       path: "/shopping-lists/:listId",
       name: "shopping-list",
       component: () => import("./views/ShoppingList.vue"),

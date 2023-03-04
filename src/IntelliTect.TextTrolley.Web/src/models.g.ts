@@ -4,6 +4,21 @@ import { Model, DataSource, convertToModel, mapToModel } from 'coalesce-vue/lib/
 export interface ApplicationUser extends Model<typeof metadata.ApplicationUser> {
   applicationUserId: number | null
   name: string | null
+  id: string | null
+  userName: string | null
+  normalizedUserName: string | null
+  email: string | null
+  normalizedEmail: string | null
+  emailConfirmed: boolean | null
+  passwordHash: string | null
+  securityStamp: string | null
+  concurrencyStamp: string | null
+  phoneNumber: string | null
+  phoneNumberConfirmed: boolean | null
+  twoFactorEnabled: boolean | null
+  lockoutEnd: Date | null
+  lockoutEnabled: boolean | null
+  accessFailedCount: number | null
 }
 export class ApplicationUser {
   
