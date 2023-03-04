@@ -74,6 +74,8 @@ services.AddSingleton(OpenApiClient);
 services.AddSingleton(secretProvider);
 
 services.AddSingleton<ISmsParser, SmsParser>();
+services.AddScoped<IListManager, ListManager>();
+services.AddScoped<ISmsMessageHandler, SmsMessageHandler>();
 
 #endregion
 
