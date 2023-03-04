@@ -56,7 +56,7 @@ services.AddDbContext<AppDbContext>(
 
 services.AddCoalesce<AppDbContext>();
 
-services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<AppDbContext>()
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider)
     .AddClaimsPrincipalFactory<ClaimsPrincipalFactory>();
