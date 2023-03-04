@@ -24,3 +24,82 @@ export class ApplicationUser {
 }
 
 
+export interface Requester extends Model<typeof metadata.Requester> {
+  requesterId: number | null
+  requesterName: string | null
+  requesterNumber: string | null
+  activeShoppingListKey: number | null
+  activeShoppingList: ShoppingList | null
+}
+export class Requester {
+  
+  /** Mutates the input object and its descendents into a valid Requester implementation. */
+  static convert(data?: Partial<Requester>): Requester {
+    return convertToModel(data || {}, metadata.Requester) 
+  }
+  
+  /** Maps the input object and its descendents to a new, valid Requester implementation. */
+  static map(data?: Partial<Requester>): Requester {
+    return mapToModel(data || {}, metadata.Requester) 
+  }
+  
+  /** Instantiate a new Requester, optionally basing it on the given data. */
+  constructor(data?: Partial<Requester> | {[k: string]: any}) {
+      Object.assign(this, Requester.map(data || {}));
+  }
+}
+
+
+export interface ShoppingList extends Model<typeof metadata.ShoppingList> {
+  shoppingListId: number | null
+  requester: Requester | null
+  applicationUsers: ApplicationUser[] | null
+  items: ShoppingListItem[] | null
+  isComplete: boolean | null
+  isDelivered: boolean | null
+}
+export class ShoppingList {
+  
+  /** Mutates the input object and its descendents into a valid ShoppingList implementation. */
+  static convert(data?: Partial<ShoppingList>): ShoppingList {
+    return convertToModel(data || {}, metadata.ShoppingList) 
+  }
+  
+  /** Maps the input object and its descendents to a new, valid ShoppingList implementation. */
+  static map(data?: Partial<ShoppingList>): ShoppingList {
+    return mapToModel(data || {}, metadata.ShoppingList) 
+  }
+  
+  /** Instantiate a new ShoppingList, optionally basing it on the given data. */
+  constructor(data?: Partial<ShoppingList> | {[k: string]: any}) {
+      Object.assign(this, ShoppingList.map(data || {}));
+  }
+}
+
+
+export interface ShoppingListItem extends Model<typeof metadata.ShoppingListItem> {
+  shoppingListItemId: number | null
+  name: string | null
+  originalName: string | null
+  shoppingList: ShoppingList | null
+  purchased: boolean | null
+}
+export class ShoppingListItem {
+  
+  /** Mutates the input object and its descendents into a valid ShoppingListItem implementation. */
+  static convert(data?: Partial<ShoppingListItem>): ShoppingListItem {
+    return convertToModel(data || {}, metadata.ShoppingListItem) 
+  }
+  
+  /** Maps the input object and its descendents to a new, valid ShoppingListItem implementation. */
+  static map(data?: Partial<ShoppingListItem>): ShoppingListItem {
+    return mapToModel(data || {}, metadata.ShoppingListItem) 
+  }
+  
+  /** Instantiate a new ShoppingListItem, optionally basing it on the given data. */
+  constructor(data?: Partial<ShoppingListItem> | {[k: string]: any}) {
+      Object.assign(this, ShoppingListItem.map(data || {}));
+  }
+}
+
+
