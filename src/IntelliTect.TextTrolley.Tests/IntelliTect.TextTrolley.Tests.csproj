@@ -12,6 +12,7 @@
     <PackageReference Include="FluentAssertions" Version="6.10.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Moq.AutoMock" Version="3.5.0" />
+    <PackageReference Include="OpenAI" Version="1.5.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,6 +22,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IntelliTect.TextTrolley.Data\IntelliTect.TextTrolley.Data.csproj" />
+    <ProjectReference Include="..\IntelliTect.TextTrolley.Web\IntelliTect.TextTrolley.Web.csproj" />
   </ItemGroup>
 
 </Project>
