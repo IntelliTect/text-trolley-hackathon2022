@@ -37,7 +37,10 @@ public class SmsParser : ISmsParser
             1. add items to a grocery list - the message will look like a shopping list or a list of items or just an item, and may have a verb synomous with add
             2. remove items from a grocery list - the message will look like a shopping list or a list of items or just an item but start with verb synomous with remove
             3. clear the entire grocery list - the message will be a single word or phrase that is synomous with clear
-            4. or it may be unclear - if you dont understand the message reply return this value
+            4. it may be unclear - if you dont understand the message reply return this value
+            5. the user may be asking for help - the message will contain the word help
+            6. show or view the list - the user will be asking to see something
+
             Depending on the intent, return the appropriate enum numeric value of the list of options - only the number (no other text or characters).
             Message below:
             """;
@@ -60,7 +63,7 @@ public class SmsParser : ISmsParser
         enumString = enumString.Replace("\n", "").Replace("\r", "");
 
         // get the first number character in the string
-        int firstNumberIndex = enumString.IndexOfAny("1234".ToCharArray());
+        int firstNumberIndex = enumString.IndexOfAny("123456".ToCharArray());
 
         if (firstNumberIndex < 0) {
             return UserIntent.Unknown;        

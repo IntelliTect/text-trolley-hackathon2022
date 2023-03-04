@@ -1,16 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+﻿using IntelliTect.TextTrolley.Data.Models;
+using IntelliTect.TextTrolley.Data.Repositories;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.Configuration.UserSecrets;
+using System.Net.NetworkInformation;
 
 namespace IntelliTect.TextTrolley.Web.Utility;
 
 public class SmsMessageHandler : ISmsMessageHandler
 {
+    public IRequesterRepository RequesterRepo { get; }
     private ISmsParser SmsParser { get; }
 
     private IListManager ListManager { get; }
 
-    public SmsMessageHandler(ISmsParser smsParser, IListManager listManager)
+    public SmsMessageHandler(IRequesterRepository requesterRepo, ISmsParser smsParser, IListManager listManager)
     {
+        RequesterRepo = requesterRepo;
         SmsParser = smsParser;
         ListManager = listManager;
     }
@@ -20,15 +25,19 @@ public class SmsMessageHandler : ISmsMessageHandler
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public async Task<string> HandleSmsAsync(string message, int userId)
+    public async Task<string> HandleSmsAsync(InboundMessage message)
     {
-        var intent = await SmsParser.InterpretUserIntent(message);
+        var requester = await GetOrCreateRequester(message);
+
+        var userId = requester.RequesterId;
+
+        var intent = await SmsParser.InterpretUserIntent(message.Body);
         List<string> updatedList;
         switch (intent)
         {
                         
             case UserIntent.AddItem:
-                 updatedList = await ListManager.AddItemsToList(userId,await SmsParser.ParseToItemList(message));
+                 updatedList = await ListManager.AddItemsToList(requester,await SmsParser.ParseToItemList(message.Body));
                 return $"""
                     Items added! Here is your list:
 
@@ -36,7 +45,7 @@ public class SmsMessageHandler : ISmsMessageHandler
                     """;
 
             case UserIntent.RemoveItem:
-                 updatedList = await ListManager.RemoveItemsFromList(userId, await SmsParser.ParseToItemList(message));
+                 updatedList = await ListManager.RemoveItemsFromList(requester, await SmsParser.ParseToItemList(message.Body));
                 return $"""
                     Items removed! Here is your list:
 
@@ -47,11 +56,29 @@ public class SmsMessageHandler : ISmsMessageHandler
                 await ListManager.ClearList(userId);
                 return "List cleared!";
 
+            case UserIntent.ViewList:
+                var theList = await ListManager.GetList(requester.RequesterId);
+                return theList.ToNewlineSeparatedString();
+
+            case UserIntent.Help:
+               
+                return """
+                    You can message me with an item or list of items and I will add them to your list.
+                    You can say delete followed by an item or list of items and I will remove anything that matches on your list
+                    You can ask for your list by saying 'show list'
+                    """
+                   ;
+
             default:
-                return "I'm sorry, I didn't understand that. Please try again. If you are adding an item, try putting the word 'add' at the start of your message.";    
+                return "I'm sorry, I didn't understand that. Please try again. Reply 'help' if you would like some tips.";    
 
         }
 
+    }
+
+    public async Task<Requester> GetOrCreateRequester(InboundMessage message)
+    {
+        return await RequesterRepo.ExistingByPhoneNumber(message.From) ?? await RequesterRepo.Create(message.From, "unknown sender");
     }
 
 }

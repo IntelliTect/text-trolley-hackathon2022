@@ -90,7 +90,7 @@ services.AddScoped<IListManager, ListManager>();
 services.AddScoped<ISmsMessageHandler, SmsMessageHandler>();
 services.AddTransient<IRequesterRepository, RequesterRepository>();
 services.AddTransient<IShoppingListItemRepository, ShoppingListItemRepository>();
-services.AddTransient<IMessagingService, MessagingService>();
+
 
 #endregion
 

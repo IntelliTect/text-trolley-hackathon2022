@@ -1,7 +1,8 @@
-﻿namespace IntelliTect.TextTrolley.Web.Utility;
+﻿using IntelliTect.TextTrolley.Data.Models;
+
+namespace IntelliTect.TextTrolley.Web.Utility;
 
 public interface ISmsMessageHandler
 { 
-    Task<string> HandleSmsAsync(string message, int userId);
-
+    Task<string> HandleSmsAsync(InboundMessage message);
 }

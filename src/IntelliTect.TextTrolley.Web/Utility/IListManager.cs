@@ -1,10 +1,12 @@
-﻿namespace IntelliTect.TextTrolley.Web.Utility;
+﻿using IntelliTect.TextTrolley.Data.Models;
+
+namespace IntelliTect.TextTrolley.Web.Utility;
 
 public interface IListManager
 {
-    Task<List<string>> AddItemsToList(int userId, List<string> items);
+    Task<List<string>> AddItemsToList(Requester requester, List<string> items);
 
-    Task<List<string>> RemoveItemsFromList(int userId, List<string> items);
+    Task<List<string>> RemoveItemsFromList(Requester requester, List<string> items);
 
     Task<List<string>> GetList(int userId);
 
