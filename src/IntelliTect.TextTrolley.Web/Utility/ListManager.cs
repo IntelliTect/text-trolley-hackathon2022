@@ -26,7 +26,8 @@ public class ListManager : IListManager
             Name = i,
             OriginalName = i,
             Purchased = false,
-            ShoppingList = requester.ActiveShoppingList
+            ShoppingList = requester.ActiveShoppingList,
+            ShoppingListId = requester.ActiveShoppingListKey
         });
 
 
