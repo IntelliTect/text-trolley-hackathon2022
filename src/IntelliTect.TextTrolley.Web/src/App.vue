@@ -30,6 +30,13 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
+        <v-list-item link to="/my-list">
+          <template #prepend>
+            <v-icon>fa-solid fa-list-check</v-icon>
+          </template>
+          <v-list-item-title>My List</v-list-item-title>
+        </v-list-item>
+
         <v-list-item link to="/coalesce-example">
           <template #prepend>
             <v-icon>fas fa-palette</v-icon>
