@@ -28,7 +28,7 @@
     <v-card-title>
       Welcome!
     </v-card-title>
-    <v-alert class="pa-10 ma-10" v-if="error" :type="errorType">
+    <v-alert class="pa-10 ma-10" v-if="error" :type="error">
       {{ errorMessage }}
      </v-alert>
       <v-form>
@@ -116,7 +116,6 @@
   let username = ref('');
   let password = ref('');
   let error = ref(false);
-  let errorType = ref('error');
   let errorMessage = ref('');
   theme.global.name.value = localStorage.getItem("DARK_THEME") ?? "dark";
 
@@ -136,7 +135,6 @@
     }
     catch (e) {
       error.value = true;
-      errorType.value = 'error';
       errorMessage.value = loginService.loginUser.message ??
         'Invalid login attempt';
     }
