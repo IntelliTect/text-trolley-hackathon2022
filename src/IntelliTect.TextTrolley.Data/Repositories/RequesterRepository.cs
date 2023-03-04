@@ -20,8 +20,7 @@ public class RequesterRepository : IRequesterRepository
 
     public async Task<Requester?> ExistingByPhoneNumber(string phoneNumber)
     {
-        return await Context.Requester.SingleOrDefaultAsync(x =>
-            string.Equals(x.RequesterNumber, phoneNumber, StringComparison.OrdinalIgnoreCase));
+        return await Context.Requester.SingleOrDefaultAsync(x => x.RequesterNumber == phoneNumber);
     }
 
     public async Task<Requester> Create(string phoneNumber, string name)
