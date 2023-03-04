@@ -7,6 +7,8 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CDisplay: typeof import('coalesce-vue-vuetify3')['CDisplay']
+    CInput: typeof import('coalesce-vue-vuetify3')['CInput']
     CLoaderStatus: typeof import('coalesce-vue-vuetify3')['CLoaderStatus']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
