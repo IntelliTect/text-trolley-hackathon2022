@@ -10,9 +10,9 @@ export default createRouter({
       component: () => import("./views/Home.vue"),
     },
     {
-      path: "/my-list",
-      name: "my-list",
-      component: () => import("./views/MyList.vue"),
+      path: "/shopping-lists",
+      name: "shopping-lists",
+      component: () => import("./views/AllShoppingLists.vue"),
     },
     {
       path: "/coalesce-example",

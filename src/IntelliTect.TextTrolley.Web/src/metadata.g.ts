@@ -154,7 +154,9 @@ export const ShoppingList = domain.types.ShoppingList = {
         type: "model",
         get typeDef() { return (domain.types.ShoppingListItem as ModelType) },
       },
-      role: "value",
+      role: "collectionNavigation",
+      get foreignKey() { return (domain.types.ShoppingListItem as ModelType).props.shoppingListId as ForeignKeyProperty },
+      get inverseNavigation() { return (domain.types.ShoppingListItem as ModelType).props.shoppingList as ModelReferenceNavigationProperty },
       dontSerialize: true,
     },
     isComplete: {
@@ -210,12 +212,28 @@ export const ShoppingListItem = domain.types.ShoppingListItem = {
         required: val => (val != null && val !== '') || "Original Name is required.",
       }
     },
+    shoppingListId: {
+      name: "shoppingListId",
+      displayName: "Shopping List Id",
+      type: "number",
+      role: "foreignKey",
+      get principalKey() { return (domain.types.ShoppingList as ModelType).props.shoppingListId as PrimaryKeyProperty },
+      get principalType() { return (domain.types.ShoppingList as ModelType) },
+      get navigationProp() { return (domain.types.ShoppingListItem as ModelType).props.shoppingList as ModelReferenceNavigationProperty },
+      hidden: 3,
+      rules: {
+        required: val => val != null || "Shopping List is required.",
+      }
+    },
     shoppingList: {
       name: "shoppingList",
       displayName: "Shopping List",
       type: "model",
       get typeDef() { return (domain.types.ShoppingList as ModelType) },
-      role: "value",
+      role: "referenceNavigation",
+      get foreignKey() { return (domain.types.ShoppingListItem as ModelType).props.shoppingListId as ForeignKeyProperty },
+      get principalKey() { return (domain.types.ShoppingList as ModelType).props.shoppingListId as PrimaryKeyProperty },
+      get inverseNavigation() { return (domain.types.ShoppingList as ModelType).props.items as ModelCollectionNavigationProperty },
       dontSerialize: true,
     },
     purchased: {

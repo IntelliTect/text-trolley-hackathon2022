@@ -14,6 +14,12 @@
       </template>
     </v-timeline>
 
+    <v-card flat width="100%">
+
+    <v-btn @click="openDialog()" color="primary" icon="fa-solid fa-plus" class="add-btn" />
+    </v-card>
+
+
     <h3>
       Purchased Items
     </h3>
@@ -24,62 +30,76 @@
       </template>
     </v-timeline>
   </v-container>
+
+  <v-dialog v-model="addItem" width="500">
+    <v-card>
+      <v-card-title>
+        Add Item
+      </v-card-title>
+
+      <v-card-text>
+        <v-text-field autofocus @keyup.enter="addToList()" v-model="newItem.name" hide-details label="Item Name" />
+        <v-checkbox color="primary" v-model="newItem.purchased" label="Purchased?" />
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer />
+        <v-btn @click="addItem = false">
+          Cancel
+        </v-btn>
+        <v-btn :disabled="!newItem.name" @click="addToList()" color="primary">
+          Save
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
+import { ShoppingListItemViewModel, ShoppingListViewModel } from "../viewmodels.g";
+
+  const props = defineProps<{ shoppingList: ShoppingListViewModel }>();
+
+  let newItem = new ShoppingListItemViewModel();
+
   const sendersName = "Joyce"
+  let addItem = ref(false);
 
-  const shoppingList = [
-    {
-      itemDescription: "Banannas",
-      isPurchased: true,
-    },
-    {
-      itemDescription: "Salad",
-      isPurchased: true,
-    },
-    {
-      itemDescription: "Man Sex Pills",
-      isPurchased: false,
-    },
-    {
-      itemDescription: "Bread",
-      isPurchased: false,
-    },
-    {
-      itemDescription: "Cream Cheese",
-      isPurchased: false,
-    },
-    {
-      itemDescription: "Crackers",
-      isPurchased: false,
-    },
-    {
-      itemDescription: "Apples",
-      isPurchased: true,
-    },
-    {
-      itemDescription: "Jelly",
-      isPurchased: false,
-    },
-    {
-      itemDescription: "Those things you put ontop of salads",
-      isPurchased: false,
-    },
-    {
-      itemDescription: "Chicken",
-      isPurchased: false,
-    }
-  ]
-
-  outstandingItems();
-  purchasedItems();
+  function log() {
+    console.log('click')
+  }
 
   function purchasedItems() {
-    return shoppingList.filter(x => x.isPurchased);
+    return props.shoppingList.items?.filter(x => x.purchased);
   }
 
   function outstandingItems() {
-    return shoppingList.filter(x => !x.isPurchased);
+    return props.shoppingList.items?.filter(x => !x.purchased);
+  }
+
+  function openDialog() {
+    // Clear out the item
+    newItem = new ShoppingListItemViewModel();
+    addItem.value = true;
+  }
+
+  function addToList() {
+    if (newItem.name) {
+      if (newItem.purchased === null) {
+        newItem.purchased = false;
+      }
+      newItem.originalName = newItem.name;
+      newItem.shoppingListId = props.shoppingList.shoppingListId;
+      props.shoppingList.items?.push(newItem);
+      newItem.$save();
+      addItem.value= false;
+    }
   }
 </script>
+
+<style>
+  .add-btn {
+    margin-left: 22px;
+    margin-bottom: 20px;
+  }
+</style>

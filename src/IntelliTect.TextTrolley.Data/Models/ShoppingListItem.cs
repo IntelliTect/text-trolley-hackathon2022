@@ -18,6 +18,9 @@ public class ShoppingListItem
     public required string OriginalName { get; set; }
 
     [Required]
+    public int ShoppingListId { get; set; }
+
+    [Required]
     public ShoppingList? ShoppingList { get; set; }
 
     [Required]
