@@ -28,7 +28,7 @@
                 <v-icon class="mr-2" color="primary">
                   fa-solid fa-cart-shopping
                 </v-icon>
-                {{ list.items.length }} item(s)
+                {{ list.items?.length }} item(s)
               </v-card-text>
 
               <v-card-actions>
