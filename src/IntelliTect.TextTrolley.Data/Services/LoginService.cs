@@ -11,6 +11,7 @@ using IntelliTect.Coalesce.Models;
 using System.Net.Mail;
 
 namespace IntelliTect.TextTrolley.Data.Services;
+
 public class LoginService : ILoginService
 {
     private SignInManager<ApplicationUser> SignInManager { get; }

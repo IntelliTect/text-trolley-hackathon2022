@@ -12,6 +12,10 @@ using IntelliTect.TextTrolley.Data;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using IntelliTect.TextTrolley.Web.Utility;
 using OpenAI_API;
+using IntelliTect.TextTrolley.Data.Services;
+using IntelliTect.TextTrolley.Web;
+using Microsoft.AspNetCore.Identity;
+using IntelliTect.TextTrolley.Data.Models;
 
 var builder = WebApplication.CreateBuilder(
     new WebApplicationOptions
@@ -52,6 +56,11 @@ services.AddDbContext<AppDbContext>(
 
 services.AddCoalesce<AppDbContext>();
 
+services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider)
+    .AddClaimsPrincipalFactory<ClaimsPrincipalFactory>();
+
 services
     .AddMvc()
     .AddJsonOptions(
@@ -73,6 +82,7 @@ var OpenApiClient = new OpenAIAPI(
 services.AddSingleton(OpenApiClient);
 services.AddSingleton(secretProvider);
 
+services.AddScoped<ILoginService, LoginService>();
 services.AddSingleton<ISmsParser, SmsParser>();
 services.AddScoped<IListManager, ListManager>();
 services.AddScoped<ISmsMessageHandler, SmsMessageHandler>();

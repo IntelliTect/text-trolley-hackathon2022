@@ -10,7 +10,4 @@ public class ApplicationUser : IdentityUser
     [Required] 
     [MaxLength(150)]
     public required string Name { get; set; }
-
-
-
 }
