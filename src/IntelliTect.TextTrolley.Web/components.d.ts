@@ -7,17 +7,15 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    CDisplay: typeof import('coalesce-vue-vuetify3')['CDisplay']
-    CInput: typeof import('coalesce-vue-vuetify3')['CInput']
-    CLoaderStatus: typeof import('coalesce-vue-vuetify3')['CLoaderStatus']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ShoppingList: typeof import('./src/components/ShoppingList.vue')['default']
+    ShoppingListItem: typeof import('./src/components/ShoppingListItem.vue')['default']
     VAlert: typeof import('vuetify/components')['VAlert']
     VApp: typeof import('vuetify/components')['VApp']
     VAppBar: typeof import('vuetify/components')['VAppBar']
     VAppBarNavIcon: typeof import('vuetify/components')['VAppBarNavIcon']
-    VAppBarTitle: typeof import('vuetify/components')['VAppBarTitle']
     VBtn: typeof import('vuetify/components')['VBtn']
     VCard: typeof import('vuetify/components')['VCard']
     VCardText: typeof import('vuetify/components')['VCardText']
@@ -25,14 +23,18 @@ declare module '@vue/runtime-core' {
     VCol: typeof import('vuetify/components')['VCol']
     VContainer: typeof import('vuetify/components')['VContainer']
     VDivider: typeof import('vuetify/components')['VDivider']
+    VHover: typeof import('vuetify/components')['VHover']
     VIcon: typeof import('vuetify/components')['VIcon']
     VList: typeof import('vuetify/components')['VList']
     VListItem: typeof import('vuetify/components')['VListItem']
+    VListItemContent: typeof import('vuetify/components')['VListItemContent']
     VListItemTitle: typeof import('vuetify/components')['VListItemTitle']
     VMain: typeof import('vuetify/components')['VMain']
     VNavigationDrawer: typeof import('vuetify/components')['VNavigationDrawer']
     VRow: typeof import('vuetify/components')['VRow']
     VSpacer: typeof import('vuetify/components')['VSpacer']
+    VTimeline: typeof import('vuetify/components')['VTimeline']
+    VTimelineItem: typeof import('vuetify/components')['VTimelineItem']
     VToolbarTitle: typeof import('vuetify/components')['VToolbarTitle']
   }
 }
