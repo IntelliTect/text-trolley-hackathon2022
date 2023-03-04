@@ -4,7 +4,7 @@
     }" #default>
     <v-container>
       <h1>
-        {{sendersName}}'s Shopping List
+        Shopping List {{ shoppingList.shoppingListId }}
       </h1>
 
       <h3>
@@ -32,42 +32,41 @@
         </template>
       </v-timeline>
     </v-container>
+
+    <v-dialog v-model="addItem" width="500">
+      <v-card>
+        <v-card-title>
+          Add Item
+        </v-card-title>
+
+        <v-card-text>
+          <v-text-field autofocus @keyup.enter="addToList()" v-model="newItem.name" hide-details label="Item Name" />
+          <v-checkbox color="primary" v-model="newItem.purchased" label="Purchased?" />
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer />
+          <v-btn @click="addItem = false">
+            Cancel
+          </v-btn>
+          <v-btn :disabled="!newItem.name" @click="addToList()" color="primary">
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </c-loader-status>
-
-  <v-dialog v-model="addItem" width="500">
-    <v-card>
-      <v-card-title>
-        Add Item
-      </v-card-title>
-
-      <v-card-text>
-        <v-text-field autofocus @keyup.enter="addToList()" v-model="newItem.name" hide-details label="Item Name" />
-        <v-checkbox color="primary" v-model="newItem.purchased" label="Purchased?" />
-      </v-card-text>
-
-      <v-card-actions>
-        <v-spacer />
-        <v-btn @click="addItem = false">
-          Cancel
-        </v-btn>
-        <v-btn :disabled="!newItem.name" @click="addToList()" color="primary">
-          Save
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
 </template>
 
 <script setup lang="ts">
   import { ShoppingListItemViewModel, ShoppingListViewModel } from "../viewmodels.g";
-  const props = defineProps<{ listId: number }>();
+  const props = defineProps<{ listId: string }>();
 
   let shoppingList = new ShoppingListViewModel();
-  shoppingList.$load(props.listId);
+  shoppingList.$load(parseInt(props.listId));
 
   let newItem = new ShoppingListItemViewModel();
 
-  const sendersName = "Joyce"
   let addItem = ref(false);
 
   function log() {
