@@ -150,6 +150,7 @@
   function closeLogin() {
     username.value = '';
     password.value = '';
+    errorMessage.value = '';
     loginDialogOpen.value = false;
   }
 
