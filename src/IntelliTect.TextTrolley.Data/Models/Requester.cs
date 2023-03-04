@@ -10,8 +10,10 @@ namespace IntelliTect.TextTrolley.Data.Models
   {
     public int RequesterId { get; set; }
     [Required]
+    [ClientValidation(IsRequired = true, MinLength = 2, MaxLength = 100)]
     public string RequesterName { get; set; }
     [Required]
+    [ClientValidation(IsRequired = true, IsPhoneUs = true)]
     public string RequesterNumber { get; set; }
   }
 }

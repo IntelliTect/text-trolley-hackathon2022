@@ -10,7 +10,8 @@ namespace IntelliTect.TextTrolley.Data.Models
   {
     public int ShoppingListItemId { get; set; }
     [Required]
-    public string Name { get; set; }
+    [ClientValidation(IsRequired = true, MinLength = 2, MaxLength = 100)]
+    public required string Name { get; set; }
     [Required]
     public int ShoppingListId { get; set; }
     [Required]

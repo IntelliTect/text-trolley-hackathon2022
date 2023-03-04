@@ -60,6 +60,8 @@ export const Requester = domain.types.Requester = {
       role: "value",
       rules: {
         required: val => (val != null && val !== '') || "Requester Name is required.",
+        minLength: val => !val || val.length >= 2 || "Requester Name must be at least 2 characters.",
+        maxLength: val => !val || val.length <= 100 || "Requester Name may not be more than 100 characters.",
       }
     },
     requesterNumber: {
@@ -69,6 +71,7 @@ export const Requester = domain.types.Requester = {
       role: "value",
       rules: {
         required: val => (val != null && val !== '') || "Requester Number is required.",
+        phone: val => !val || /^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/.test(val.replace(/\s+/g, '')) || "Requester Number must be a valid US phone number.",
       }
     },
   },
@@ -146,6 +149,8 @@ export const ShoppingListItem = domain.types.ShoppingListItem = {
       role: "value",
       rules: {
         required: val => (val != null && val !== '') || "Name is required.",
+        minLength: val => !val || val.length >= 2 || "Name must be at least 2 characters.",
+        maxLength: val => !val || val.length <= 100 || "Name may not be more than 100 characters.",
       }
     },
     shoppingListId: {

@@ -72,8 +72,18 @@ namespace IntelliTect.TextTrolley.Web.Models
         /// </summary>
         public override IntelliTect.TextTrolley.Data.Models.ShoppingListItem MapToNew(IMappingContext context)
         {
-            var entity = new IntelliTect.TextTrolley.Data.Models.ShoppingListItem();
-            MapTo(entity, context);
+            var includes = context.Includes;
+
+            var entity = new IntelliTect.TextTrolley.Data.Models.ShoppingListItem()
+            {
+                Name = Name,
+            };
+
+            if (OnUpdate(entity, context)) return entity;
+            if (ShouldMapTo(nameof(ShoppingListItemId))) entity.ShoppingListItemId = (ShoppingListItemId ?? entity.ShoppingListItemId);
+            if (ShouldMapTo(nameof(ShoppingListId))) entity.ShoppingListId = (ShoppingListId ?? entity.ShoppingListId);
+            if (ShouldMapTo(nameof(Purchased))) entity.Purchased = (Purchased ?? entity.Purchased);
+
             return entity;
         }
     }
