@@ -5,16 +5,17 @@
                    :icon="getIcon()"
                    @click="toggleItem()"
                    width="70vw">
-    <v-card @click.stop="edit" :ripple="false" flat>
+    <v-card @click.stop="isEditing = true" :ripple="false" flat>
       <v-row class="ma-1" dense align="center">
         <v-col>
-          <span v-if="!isEditing" :class="props.listItem.purchased ? 'text-decoration-line-through' : ''">
+          <span v-if="!isEditing || isLoading" :class="props.listItem.purchased ? 'text-decoration-line-through' : ''">
             {{ listItem.name }}
           </span>
-          <v-text-field autofocus v-else width="100%" hide-details label="Description" v-model="listItem.name" />
+          <v-text-field @keyup.enter="save()" @click.stop="" autofocus v-else width="100%" hide-details label="Description" v-model="listItem.name" />
         </v-col>
         <v-col cols="auto" class="text-right">
-          <v-btn icon="fa-solid fa-trash" color="error" @click.stop="deleteItem()" size="x-small" />
+          <v-btn v-if="!isEditing" icon="fa-solid fa-trash" color="error" @click.stop="deleteItem()" size="x-small" />
+          <v-btn v-else :disabled="isLoading" :loading="isLoading" icon="fa-solid fa-floppy-disk" color="primary" @click.stop="save()" size="x-small" />
         </v-col>
       </v-row>
     </v-card>
@@ -35,6 +36,7 @@
   const theme = useTheme();
 
   let isEditing = ref(false);
+  let isLoading = ref(false);
 
   function stopEditing() {
     isEditing.value = false;
@@ -48,11 +50,15 @@
     }
   }
 
-  function edit() {
-    isEditing.value = !isEditing.value;
-    if (!isEditing) {
-      props.listItem.$save();
-    }
+  function save() {
+      isLoading.value = true;
+    // artifical wait for better UX experience
+    // mostly to prevent an accidental click of the delete btn... :)
+    setTimeout(() => {
+      isEditing.value = false;
+      isLoading.value = false;
+    }, 700)
+    props.listItem.$save();
   }
 
   function deleteItem() {

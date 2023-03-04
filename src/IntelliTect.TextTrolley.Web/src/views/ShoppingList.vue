@@ -1,34 +1,38 @@
 <template>
-  <v-container>
-    <h1>
-      {{sendersName}}'s Shopping List
-    </h1>
+  <c-loader-status :loaders="{
+        'no-initial-content no-error-content': [shoppingList.$load],
+    }" #default>
+    <v-container>
+      <h1>
+        {{sendersName}}'s Shopping List
+      </h1>
 
-    <h3>
-      Outstanding Items
-    </h3>
-    <v-timeline dense clipped min-width="800px" side="end" class="float-left">
-      <template v-for="(item, i) in outstandingItems()"
-                :key="i">
-        <ShoppingListItem :listItem="item" />
-      </template>
-    </v-timeline>
+      <h3>
+        Outstanding Items
+      </h3>
+      <v-timeline dense clipped min-width="800px" side="end" class="float-left">
+        <template v-for="(item, i) in outstandingItems()"
+                  :key="i">
+          <ShoppingListItem :listItem="item" />
+        </template>
+      </v-timeline>
 
-    <v-card  color="transparent" flat width="100%">
-      <v-btn @click="openDialog()" color="primary" icon="fa-solid fa-plus" class="add-btn" />
-    </v-card>
+      <v-card color="transparent" flat width="100%">
+        <v-btn @click="openDialog()" color="primary" icon="fa-solid fa-plus" class="add-btn" />
+      </v-card>
 
 
-    <h3>
-      Purchased Items
-    </h3>
-    <v-timeline dense clipped min-width="800px" side="end" class="float-left">
-      <template v-for="(item, i) in purchasedItems()"
-                :key="i">
-        <ShoppingListItem :listItem="item" />
-      </template>
-    </v-timeline>
-  </v-container>
+      <h3>
+        Purchased Items
+      </h3>
+      <v-timeline dense clipped min-width="800px" side="end" class="float-left">
+        <template v-for="(item, i) in purchasedItems()"
+                  :key="i">
+          <ShoppingListItem :listItem="item" />
+        </template>
+      </v-timeline>
+    </v-container>
+  </c-loader-status>
 
   <v-dialog v-model="addItem" width="500">
     <v-card>
@@ -56,8 +60,10 @@
 
 <script setup lang="ts">
   import { ShoppingListItemViewModel, ShoppingListViewModel } from "../viewmodels.g";
+  const props = defineProps<{ listId: number }>();
 
-  const props = defineProps<{ shoppingList: ShoppingListViewModel }>();
+  let shoppingList = new ShoppingListViewModel();
+  shoppingList.$load(props.listId);
 
   let newItem = new ShoppingListItemViewModel();
 
@@ -69,11 +75,11 @@
   }
 
   function purchasedItems() {
-    return props.shoppingList.items?.filter(x => x.purchased);
+    return shoppingList.items?.filter(x => x.purchased);
   }
 
   function outstandingItems() {
-    return props.shoppingList.items?.filter(x => !x.purchased);
+    return shoppingList.items?.filter(x => !x.purchased);
   }
 
   function openDialog() {
@@ -88,8 +94,8 @@
         newItem.purchased = false;
       }
       newItem.originalName = newItem.name;
-      newItem.shoppingListId = props.shoppingList.shoppingListId;
-      props.shoppingList.items?.push(newItem);
+      newItem.shoppingListId = shoppingList.shoppingListId;
+      shoppingList.items?.push(newItem);
       newItem.$save();
       addItem.value = false;
     }
