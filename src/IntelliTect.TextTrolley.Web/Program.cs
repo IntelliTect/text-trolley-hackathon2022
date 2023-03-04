@@ -9,6 +9,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using IntelliTect.TextTrolley.Data;
+using IntelliTect.TextTrolley.Data.Repositories;
+using IntelliTect.TextTrolley.Data.Services;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using IntelliTect.TextTrolley.Web.Utility;
 using OpenAI_API;
@@ -86,6 +88,9 @@ services.AddScoped<ILoginService, LoginService>();
 services.AddSingleton<ISmsParser, SmsParser>();
 services.AddScoped<IListManager, ListManager>();
 services.AddScoped<ISmsMessageHandler, SmsMessageHandler>();
+services.AddTransient<IRequesterRepository, RequesterRepository>();
+services.AddTransient<IShoppingListItemRepository, ShoppingListItemRepository>();
+services.AddTransient<IMessagingService, MessagingService>();
 
 #endregion
 
