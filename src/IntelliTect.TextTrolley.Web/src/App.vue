@@ -116,7 +116,7 @@
   let username = ref('');
   let password = ref('');
   let error = ref(false);
-  let errorType = ref('');
+  let errorType = ref('error');
   let errorMessage = ref('');
   theme.global.name.value = localStorage.getItem("DARK_THEME") ?? "dark";
 
