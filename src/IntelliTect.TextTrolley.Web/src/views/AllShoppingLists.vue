@@ -62,20 +62,24 @@
 
   const shoppingLists = new ShoppingListListViewModel();
 
-  shoppingLists.$load();
+  shoppingLists.$useAutoLoad();
+  shoppingLists.$pageSize = 1000;
 
-  function closeList(shoppingList: ShoppingListViewModel) {
+  async function closeList(shoppingList: ShoppingListViewModel) {
+    console.log('close')
     shoppingList.isComplete = true;
+    await shoppingList.$save();
+    await shoppingLists.$load();
   }
 
-  function addList() {
+  async function addList() {
     const shoppingList = new ShoppingListViewModel();
 
     shoppingList.isComplete = false;
     shoppingList.isDelivered = false;
 
-    shoppingList.$save();
+    await shoppingList.$save();
 
-    shoppingLists.$load();
+    await shoppingLists.$load();
   }
 </script>
