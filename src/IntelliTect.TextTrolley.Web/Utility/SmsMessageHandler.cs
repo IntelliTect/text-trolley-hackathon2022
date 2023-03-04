@@ -20,7 +20,7 @@ public class SmsMessageHandler : ISmsMessageHandler
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public async Task<string> HandleSmsAsync(string message, string userId)
+    public async Task<string> HandleSmsAsync(string message, int userId)
     {
         var intent = await SmsParser.InterpretUserIntent(message);
         List<string> updatedList;
