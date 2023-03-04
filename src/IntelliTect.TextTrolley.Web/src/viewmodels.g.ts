@@ -3,6 +3,28 @@ import * as $models from './models.g'
 import * as $apiClients from './api-clients.g'
 import { ViewModel, ListViewModel, ServiceViewModel, DeepPartial, defineProps } from 'coalesce-vue/lib/viewmodel'
 
+export interface ApplicationRoleViewModel extends $models.ApplicationRole {
+  id: number | null;
+  name: string | null;
+  normalizedName: string | null;
+  concurrencyStamp: string | null;
+}
+export class ApplicationRoleViewModel extends ViewModel<$models.ApplicationRole, $apiClients.ApplicationRoleApiClient, number> implements $models.ApplicationRole  {
+  
+  constructor(initialData?: DeepPartial<$models.ApplicationRole> | null) {
+    super($metadata.ApplicationRole, new $apiClients.ApplicationRoleApiClient(), initialData)
+  }
+}
+defineProps(ApplicationRoleViewModel, $metadata.ApplicationRole)
+
+export class ApplicationRoleListViewModel extends ListViewModel<$models.ApplicationRole, $apiClients.ApplicationRoleApiClient, ApplicationRoleViewModel> {
+  
+  constructor() {
+    super($metadata.ApplicationRole, new $apiClients.ApplicationRoleApiClient())
+  }
+}
+
+
 export interface ApplicationUserViewModel extends $models.ApplicationUser {
   name: string | null;
   id: number | null;
@@ -144,12 +166,14 @@ export class LoginServiceViewModel extends ServiceViewModel<typeof $metadata.Log
 
 
 const viewModelTypeLookup = ViewModel.typeLookup = {
+  ApplicationRole: ApplicationRoleViewModel,
   ApplicationUser: ApplicationUserViewModel,
   Requester: RequesterViewModel,
   ShoppingList: ShoppingListViewModel,
   ShoppingListItem: ShoppingListItemViewModel,
 }
 const listViewModelTypeLookup = ListViewModel.typeLookup = {
+  ApplicationRole: ApplicationRoleListViewModel,
   ApplicationUser: ApplicationUserListViewModel,
   Requester: RequesterListViewModel,
   ShoppingList: ShoppingListListViewModel,

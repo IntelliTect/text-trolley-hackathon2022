@@ -1,12 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using IntelliTect.TextTrolley.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace IntelliTect.TextTrolley.Data;
 
 [Coalesce]
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
 {
-    public DbSet<ApplicationUser> ApplicationUsers => Set<ApplicationUser>();
     public DbSet<ShoppingList> ShoppingList => Set<ShoppingList>();
     public DbSet<ShoppingListItem> ShoppingListItem => Set<ShoppingListItem>();
     public DbSet<Requester> Requester => Set<Requester>();
