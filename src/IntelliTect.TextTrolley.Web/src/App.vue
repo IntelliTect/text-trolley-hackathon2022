@@ -78,13 +78,6 @@
           <v-list-item-title>Register</v-list-item-title>
         </v-list-item>
 
-        <v-list-item link to="/coalesce-example">
-          <template #prepend>
-            <v-icon>fas fa-palette</v-icon>
-          </template>
-          <v-list-item-title>Custom Page Example</v-list-item-title>
-        </v-list-item>
-
         <v-list-item link to="/admin">
           <template #prepend>
             <v-icon>fas fa-cogs</v-icon>
