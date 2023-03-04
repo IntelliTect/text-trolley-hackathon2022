@@ -20,7 +20,7 @@ public class ClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser
     protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
     {
         var identity = await base.GenerateClaimsAsync(user);
-
+        identity.AddClaim(new Claim("id", user.ApplicationUserId.ToString()));
         //add claims here
       
         return identity;

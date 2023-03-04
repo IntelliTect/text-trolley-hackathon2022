@@ -18,8 +18,10 @@ declare module '@vue/runtime-core' {
     VAppBarNavIcon: typeof import('vuetify/components')['VAppBarNavIcon']
     VBtn: typeof import('vuetify/components')['VBtn']
     VCard: typeof import('vuetify/components')['VCard']
+    VCardActions: typeof import('vuetify/components')['VCardActions']
     VCardText: typeof import('vuetify/components')['VCardText']
     VCardTitle: typeof import('vuetify/components')['VCardTitle']
+    VCheckbox: typeof import('vuetify/components')['VCheckbox']
     VCol: typeof import('vuetify/components')['VCol']
     VContainer: typeof import('vuetify/components')['VContainer']
     VDivider: typeof import('vuetify/components')['VDivider']
@@ -30,6 +32,11 @@ declare module '@vue/runtime-core' {
     VMain: typeof import('vuetify/components')['VMain']
     VNavigationDrawer: typeof import('vuetify/components')['VNavigationDrawer']
     VRow: typeof import('vuetify/components')['VRow']
+    VSelect: typeof import('vuetify/components')['VSelect']
+    VSpacer: typeof import('vuetify/components')['VSpacer']
+    VTextField: typeof import('vuetify/components')['VTextField']
+    VTimeline: typeof import('vuetify/components')['VTimeline']
+    VTimelineItem: typeof import('vuetify/components')['VTimelineItem']
     VToolbarTitle: typeof import('vuetify/components')['VToolbarTitle']
   }
 }
