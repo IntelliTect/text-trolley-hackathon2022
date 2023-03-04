@@ -1,6 +1,8 @@
 using IntelliTect.Coalesce;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Console;
 using Microsoft.Net.Http.Headers;
@@ -10,6 +12,8 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using IntelliTect.TextTrolley.Data;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using IntelliTect.TextTrolley.Data.Models;
+using IntelliTect.TextTrolley.Web;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -42,6 +46,11 @@ services.AddDbContext<AppDbContext>(options => options
 
 services.AddCoalesce<AppDbContext>();
 
+services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider)
+    .AddClaimsPrincipalFactory<ClaimsPrincipalFactory>();
+
 services
     .AddMvc()
     .AddJsonOptions(options =>
@@ -53,6 +62,7 @@ services
 
 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie();
+
 
 #endregion
 

@@ -12,7 +12,7 @@
       <v-alert class="mb-2" type="error" color="error"> Error </v-alert>
     </v-container>
 
-    <HelloWorld msg="Welcome to your new Vue.js Coalesce application!" />
+    <HelloWorld msg="Welcome to the Text Trolley!" />
   </div>
 </template>
 
