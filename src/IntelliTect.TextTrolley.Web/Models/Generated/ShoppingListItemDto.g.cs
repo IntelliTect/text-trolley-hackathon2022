@@ -15,6 +15,7 @@ namespace IntelliTect.TextTrolley.Web.Models
         private int? _ShoppingListItemId;
         private string _Name;
         private int? _ShoppingListId;
+        private bool? _Purchased;
 
         public int? ShoppingListItemId
         {
@@ -31,6 +32,11 @@ namespace IntelliTect.TextTrolley.Web.Models
             get => _ShoppingListId;
             set { _ShoppingListId = value; Changed(nameof(ShoppingListId)); }
         }
+        public bool? Purchased
+        {
+            get => _Purchased;
+            set { _Purchased = value; Changed(nameof(Purchased)); }
+        }
 
         /// <summary>
         /// Map from the domain object to the properties of the current DTO instance.
@@ -43,6 +49,7 @@ namespace IntelliTect.TextTrolley.Web.Models
             this.ShoppingListItemId = obj.ShoppingListItemId;
             this.Name = obj.Name;
             this.ShoppingListId = obj.ShoppingListId;
+            this.Purchased = obj.Purchased;
         }
 
         /// <summary>
@@ -57,6 +64,7 @@ namespace IntelliTect.TextTrolley.Web.Models
             if (ShouldMapTo(nameof(ShoppingListItemId))) entity.ShoppingListItemId = (ShoppingListItemId ?? entity.ShoppingListItemId);
             if (ShouldMapTo(nameof(Name))) entity.Name = Name;
             if (ShouldMapTo(nameof(ShoppingListId))) entity.ShoppingListId = (ShoppingListId ?? entity.ShoppingListId);
+            if (ShouldMapTo(nameof(Purchased))) entity.Purchased = (Purchased ?? entity.Purchased);
         }
 
         /// <summary>

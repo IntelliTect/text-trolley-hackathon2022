@@ -13,6 +13,8 @@ namespace IntelliTect.TextTrolley.Data.Models
     public string Name { get; set; }
     [Required]
     public int ShoppingListId { get; set; }
+    [Required]
+    public bool Purchased { get; set; }
 
   }
 }

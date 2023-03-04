@@ -76,6 +76,7 @@ export interface ShoppingListItem extends Model<typeof metadata.ShoppingListItem
   shoppingListItemId: number | null
   name: string | null
   shoppingListId: number | null
+  purchased: boolean | null
 }
 export class ShoppingListItem {
   

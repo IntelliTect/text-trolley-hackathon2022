@@ -69,6 +69,7 @@ export interface ShoppingListItemViewModel extends $models.ShoppingListItem {
   shoppingListItemId: number | null;
   name: string | null;
   shoppingListId: number | null;
+  purchased: boolean | null;
 }
 export class ShoppingListItemViewModel extends ViewModel<$models.ShoppingListItem, $apiClients.ShoppingListItemApiClient, number> implements $models.ShoppingListItem  {
   

@@ -157,6 +157,15 @@ export const ShoppingListItem = domain.types.ShoppingListItem = {
         required: val => val != null || "Shopping List Id is required.",
       }
     },
+    purchased: {
+      name: "purchased",
+      displayName: "Purchased",
+      type: "boolean",
+      role: "value",
+      rules: {
+        required: val => val != null || "Purchased is required.",
+      }
+    },
   },
   methods: {
   },
