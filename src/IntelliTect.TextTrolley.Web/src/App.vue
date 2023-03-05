@@ -28,7 +28,7 @@
     <v-card-title>
       Welcome!
     </v-card-title>
-    <v-alert class="pa-10 ma-10" v-if="error" :type="'error'">
+    <v-alert class="pa-10 ma-10" v-if="error">
       {{ errorMessage }}
      </v-alert>
       <v-form>
@@ -138,12 +138,18 @@
   }
 
   function openLogin() {
+    username.value = '';
+    password.value = '';
+    errorMessage.value = '';
+    error.value = false;
     loginDialogOpen.value = true;
   }
+
   function closeLogin() {
     username.value = '';
     password.value = '';
     errorMessage.value = '';
+    error.value = false;
     loginDialogOpen.value = false;
   }
 

@@ -1,5 +1,5 @@
 ﻿<template>
-  <v-card class="mx-auto"
+  <v-card class="mx-auto ma-15"
           max-width="350"
           title="User Registration">
     <v-card-text>

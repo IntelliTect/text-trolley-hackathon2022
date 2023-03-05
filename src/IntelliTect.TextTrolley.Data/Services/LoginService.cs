@@ -26,12 +26,16 @@ public class LoginService : ILoginService
     {
         var result = await SignInManager.PasswordSignInAsync(email, password, true, false);
 
-        var user = db.Users.FirstOrDefault(u => u.Email == email);
+        var user = db.Users.FirstOrDefault(u => u.NormalizedUserName == email.ToUpper());
 
         if (user == null) return "User cannot be found, please check credentials.";
         if (result.IsLockedOut) return "This account is currently disabled.";
         if (!result.Succeeded || user is null)
             return "Username or password are incorrect.";
+        if (result.Succeeded)
+        {
+            return "Congratulations you're logged in!";
+        }
         return "Something has gone wrong on our end, please try again later.";
     }
 
@@ -48,7 +52,7 @@ public class LoginService : ILoginService
         }
 
         var user = new ApplicationUser
-            { Name = $"{firstName} {lastName}", UserName = email, PhoneNumber = phoneNumber };
+        { Name = $"{firstName} {lastName}", UserName = email, PhoneNumber = phoneNumber };
         var createUserResult = await UserManager.CreateAsync(user, password);
         //await UserManager.AddToRoleAsync(user, Roles.User);
 
