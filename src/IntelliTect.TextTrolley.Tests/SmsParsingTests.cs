@@ -18,6 +18,9 @@ public class SmsParsingTests : IClassFixture<SmsParserFixture>
             new object[] { "add apple, banana, cherry", 3 },
             new object[] { "add grape, kiwi, lemon, orange", 4 },
             new object[] { "please add pear, watermelon", 2 },
+            new object[] { "remove pear, watermelon", 2 },
+            new object[] { "delete tofu", 1 },
+            new object[] { "please add tofu, watermelon", 2 },
             new object[] { "\"eggs bacon cheese icecream donuts whole milk heavy cream\"", 7 },
             new object[]
             {
@@ -36,7 +39,7 @@ public class SmsParsingTests : IClassFixture<SmsParserFixture>
     public async Task ParseMessageIntoListList_GetsCloseEnough(string list, int expectedCount)
     {
         List<string> result = await _Fixture.SmsParser.ParseToItemList(list);
-        if (result.Count < expectedCount)
+        if (result.Count > expectedCount)
         {
             Assert.Fail(string.Join(", ", result));
         }
@@ -91,7 +94,7 @@ public class SmsParserFixture : IDisposable
 
         var apiKey = secretProvider.GetSecret("OpenApiToken").GetAwaiter().GetResult();
 
-        var openai = new OpenAIAPI(apiKey);
+        var openai = new OpenAIApi(apiKey);
 
         SmsParser = new SmsParser(openai);
     }

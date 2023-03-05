@@ -35,7 +35,7 @@ public class OpenAiPromptTests : IClassFixture<OpenAiPromptFixture>
 
 public class OpenAiPromptFixture : IDisposable
 {
-    public OpenAIAPI OpenAi { get; private set; }
+    public OpenAIApi OpenAi { get; private set; }
 
     public OpenAiPromptFixture()
     {
@@ -43,7 +43,7 @@ public class OpenAiPromptFixture : IDisposable
 
         var apiKey = secretProvider.GetSecret("OpenApiToken").GetAwaiter().GetResult();
 
-        OpenAi = new OpenAIAPI(apiKey);
+        OpenAi = new OpenAIApi(apiKey);
     }
 
     public void Dispose()

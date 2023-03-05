@@ -78,7 +78,7 @@ services
 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 var secretProvider = new SecretProvider();
-var OpenApiClient = new OpenAIAPI(
+var OpenApiClient = new OpenAIApi(
     secretProvider.GetSecret("OpenApiToken").GetAwaiter().GetResult()
 );
 services.AddSingleton(OpenApiClient);
