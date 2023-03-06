@@ -28,15 +28,21 @@ public class LoginService : ILoginService
 
         var user = db.Users.FirstOrDefault(u => u.NormalizedUserName == email.ToUpper());
 
-        if (user == null) return "User cannot be found, please check credentials.";
-        if (result.IsLockedOut) return "This account is currently disabled.";
-        if (!result.Succeeded || user is null)
-            return "Username or password are incorrect.";
-        if (result.Succeeded)
+        var message = "Something has gone wrong on our end, please try again later.";
+        var success = false;
+
+        if (user == null)
+            message = "User cannot be found, please check credentials.";
+        else if (result.IsLockedOut)
+            message = "This account is currently disabled.";
+        else if (!result.Succeeded)
+            message = "Username or password are incorrect.";
+        else if (result.Succeeded)
         {
-            return "Congratulations you're logged in!";
+            return new ItemResult("Congrats you! You're logged in! Here is a complimentary cookie!") { WasSuccessful = true };
         }
-        return "Something has gone wrong on our end, please try again later.";
+
+        return new ItemResult(message) { WasSuccessful = success };
     }
 
     public async Task<ItemResult> RegisterUser([Inject] AppDbContext db, string firstName, string lastName,

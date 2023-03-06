@@ -1,18 +1,18 @@
 using OpenAI_API;
-using OpenAI_API.Completions;
+using OpenAI_API.Chat;
 
 namespace IntelliTect.TextTrolley.Web.Utility;
 
 public class SmsParser : ISmsParser
 {
-    private OpenAIAPI _Client; 
+    private OpenAIApi _Client;
 
-    public SmsParser(OpenAIAPI client)
+    public SmsParser(OpenAIApi client)
     {
         _Client = client;
     }
 
-    public async  Task<bool> InterpretNegativeResponse(string text)
+    public async Task<bool> InterpretNegativeResponse(string text)
     {
         if (text.ToLower().Contains("n"))
         {
@@ -45,19 +45,18 @@ public class SmsParser : ISmsParser
             Message below:
             """;
 
+        var fullPrompt = $"{prompt}\n\n" + string.Join("\n", text);
 
-        CompletionRequest completion = new CompletionRequest();
-        completion.Prompt = $"{prompt}\n\n" + string.Join("\n", text);
-        completion.MaxTokens = 100;
-        var result = await _Client.Completions.CreateCompletionAsync(completion);
+        var req = CreateRequest(fullPrompt, 100);
 
-        if (!result.Completions.Any())
+        var result = await _Client.Chat.CreateChatAsync(req);
+
+        if (!result.Choices.Any())
         {
-
-            throw new Exception("No completions returned");
+            throw new Exception("No choices returned from OpenAI");
         }
 
-        string? enumString = result.Completions[0].Text;
+        string? enumString = result.Choices[0].Message.Content;
 
         // remove the newline characters from the text
         enumString = enumString.Replace("\n", "").Replace("\r", "");
@@ -65,14 +64,15 @@ public class SmsParser : ISmsParser
         // get the first number character in the string
         int firstNumberIndex = enumString.IndexOfAny("123456".ToCharArray());
 
-        if (firstNumberIndex < 0) {
-            return UserIntent.Unknown;        
+        if (firstNumberIndex < 0)
+        {
+            return UserIntent.Unknown;
         }
 
 
         // get the char at the first number index and convert it to an UserIntent
         return (UserIntent)int.Parse(enumString[firstNumberIndex].ToString());
-     
+
 
     }
 
@@ -81,32 +81,50 @@ public class SmsParser : ISmsParser
 
         var prompt = """
             Parse the attached message which is a grocery list using following rules.
-            Ignore any starting text that is about the list, like "grocery list" or "please", or "here is my list" or "add to my list"
+            Ignore any starting text that is about the list, like "grocery list" or "please", or "here is my list" or "add to my list", or "remove", or "delete"
             Spell check any items that you are 100 percent are spelled wrong.
             Also please retain any quanitity information, as well as descriptions about like the size of the item, packaging, or container.
             Format the response as single string with items seperated by commas
-            if there are commas in the original text, remove them.
+            if there are commas in the original text, remove them. Do not add to the list!!!
             Message below:
             """;
 
-        CompletionRequest completion = new CompletionRequest();
-        completion.Prompt = $"{prompt}\n\n" + string.Join("\n", text);
-        completion.MaxTokens = text.Length+100;
-        var result = await _Client.Completions.CreateCompletionAsync(completion);
+        var fullPrompt = $"{prompt}\n\n" + string.Join("\n", text);
 
-        if (!result.Completions.Any()) {
-        
-            throw new Exception("No completions returned");
+
+        var req = CreateRequest(fullPrompt, text.Length + 100);
+
+
+        var result = await _Client.Chat.CreateChatAsync(req);
+
+        if (!result.Choices.Any())
+        {
+            throw new Exception("No choices returned from OpenAI");
         }
 
-        string? parsedList = result.Completions[0].Text;
-
-        
+        string parsedList = result.Choices[0].Message.Content;
 
         // remove the newline characters from the text
-        parsedList = parsedList.Replace("\n","").Replace("\r","");
+        parsedList = parsedList.Replace("\n", "").Replace("\r", "");
 
         // split the result into a list of strings and return it
-        return parsedList.Split(",").ToList();
+        var list = parsedList.Split(",").ToList();
+        return list.Select(i=>i.TrimStart()).ToList();
+    }
+
+    private ChatRequest CreateRequest(string prompt, int maxTokens)
+    {
+        var req = new ChatRequest()
+        {
+            Model = OpenAI_API.Models.Model.ChatGPTTurbo,
+            Messages = new List<ChatMessage>() {
+            new ChatMessage("user", prompt)
+                 },
+            Temperature = 0,
+            MaxTokens = maxTokens,
+
+        };
+
+        return req;
     }
 }

@@ -7,7 +7,7 @@ public static class OpenAiPrompts
 {
     
 
-    public static async Task<List<int>> GetIndincesToRemove(OpenAIAPI openAIAPI, List<string> list1, List<string> list2)
+    public static async Task<List<int>> GetIndincesToRemove(OpenAIApi openAIAPI, List<string> list1, List<string> list2)
     {
 
         var prompt = $"""
