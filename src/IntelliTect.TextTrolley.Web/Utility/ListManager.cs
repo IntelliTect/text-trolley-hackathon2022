@@ -17,60 +17,65 @@ public class ListManager : IListManager
         ShoppingListItemRepo = shoppingListItemRepo;
     }
 
-
     public async Task<List<string>> AddItemsToList(Requester requester, List<string> items)
     {
-
-        var convertedItems = items.Select(i => new ShoppingListItem()
-        {
-            Name = i,
-            OriginalName = i,
-            Purchased = false,
-            ShoppingList = requester.ActiveShoppingList,
-            ShoppingListId = requester.ActiveShoppingListKey
-        });
-
+        var convertedItems = items.Select(
+            i =>
+                new ShoppingListItem()
+                {
+                    Name = i,
+                    OriginalName = i,
+                    Purchased = false,
+                    ShoppingList = requester.ActiveShoppingList,
+                    ShoppingListId = requester.ActiveShoppingListKey
+                }
+        );
 
         foreach (ShoppingListItem item in convertedItems)
         {
             await ShoppingListItemRepo.AddItem(item);
         }
 
-      
-        var list = await _dbContext.ShoppingList.FirstAsync(l => l.Requester.RequesterId == requester.RequesterId);
+        var list = await GetUsersItems(requester.RequesterId);
 
-        var stringList = list.Items.Select(i => i.Name).ToList();
-
-        return stringList;
+        return list.Select(i=>i.Name).ToList();
     }
 
-    async Task<List<string>> IListManager.RemoveItemsFromList(Requester requester, List<string> items)
+    async Task<List<string>> IListManager.RemoveItemsFromList(
+        Requester requester,
+        List<string> items
+    )
     {
         var userId = requester.RequesterId;
 
-        var list = await _dbContext.ShoppingList.FirstAsync(l => l.Requester.RequesterId == userId);
+        var existingItems = await GetUsersItems(userId);
 
-        var stringList = list.Items.Select(i => new { i.Name, i.ShoppingListItemId}).ToList();
+        var stringList = existingItems.Select(i => new { i.Name, i.ShoppingListItemId }).ToList();
 
-        var indices = ListTools.GetIndincesToRemove(stringList.Select(i=>i.Name).ToList(), items);
+        var indices = ListTools.GetIndincesToRemove(stringList.Select(i => i.Name).ToList(), items);
 
         // might have duplicate indices need to remove those todo
         var idsOfItemsToRemove = indices.Select(i => stringList[i].ShoppingListItemId);
 
-        // probably a more eloquent way to do this
-        foreach (int id in idsOfItemsToRemove) {
-            list.Items.RemoveAll(item => item.ShoppingListItemId == id);
-        }
-        await _dbContext.SaveChangesAsync();
-        return list.Items.Select(i => i.Name).ToList();
+        var itemsToRemove = existingItems.Where(
+            i => idsOfItemsToRemove.Contains(i.ShoppingListItemId)
+        );
 
+        _dbContext.ShoppingListItem.RemoveRange(itemsToRemove);
+
+        await _dbContext.SaveChangesAsync();
+
+        var remainingItems = existingItems.Where(
+            i => !idsOfItemsToRemove.Contains(i.ShoppingListItemId)
+        );
+        return remainingItems.Select(i => i.Name).ToList();
     }
 
-     async Task<List<string>> IListManager.GetList(int userId)
+    async Task<List<string>> IListManager.GetList(int userId)
     {
-       var list = await  _dbContext.ShoppingList.FirstAsync(l => l.Requester.RequesterId == userId);
+        var items = await GetUsersItems(userId);
 
-        return list.Items.Select(i => i.Name).ToList();
+        return items.Select(i => i.Name).ToList();
     }
 
     Task IListManager.ClearList(int userId)
@@ -78,4 +83,14 @@ public class ListManager : IListManager
         throw new NotImplementedException();
     }
 
+    private async Task<List<ShoppingListItem>> GetUsersItems(int userId)
+    {
+        var list = await _dbContext.ShoppingList.FirstAsync(l => l.Requester.RequesterId == userId);
+
+        var items = await _dbContext.ShoppingListItem
+            .Where(i => i.ShoppingListId == list.ShoppingListId)
+            .ToListAsync();
+
+        return items;
+    }
 }

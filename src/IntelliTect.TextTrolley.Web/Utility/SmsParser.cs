@@ -108,7 +108,8 @@ public class SmsParser : ISmsParser
         parsedList = parsedList.Replace("\n", "").Replace("\r", "");
 
         // split the result into a list of strings and return it
-        return parsedList.Split(",").ToList();
+        var list = parsedList.Split(",").ToList();
+        return list.Select(i=>i.TrimStart()).ToList();
     }
 
     private ChatRequest CreateRequest(string prompt, int maxTokens)
